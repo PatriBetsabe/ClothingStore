@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 
 import com.lamadrid.store.utilities.NotFoundException;
 
-@Entity(name = "purshase")
+@Entity(name = "purchase")
 public class Purchase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
