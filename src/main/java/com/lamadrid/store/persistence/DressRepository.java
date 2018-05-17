@@ -1,5 +1,8 @@
 package com.lamadrid.store.persistence;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,16 +16,16 @@ public class DressRepository {
 	@Autowired
 	private HelperDressRepository repository;
 	
-	public void save(Dress dress) throws InvalidParamException, NotFoundException {
-		if(dress==null)
-			throw new NotFoundException();
-		
+	public void save(Dress dress) throws InvalidParamException{
+		if(dress == null)
+			throw new InvalidParamException();
 		try {
 			repository.save(dress);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new InvalidParamException("Repeated user");
+			throw new InvalidParamException("Repeated dress");
 		}
+
 	}
 	
 
@@ -34,12 +37,22 @@ public class DressRepository {
 		}
 	}
 	
-	/*public void removeDresses(Purchase purchase) {
-		repository.removeByPurchase(purchase);
-	}*/
+	public List<Dress> getAllDresses() {
+		List<Dress> result = new ArrayList<>();
+		
+		for(Dress d : repository.findAll()) {
+			result.add(d);
+		}
+		
+		return result;
+	}
 	
 	public void removeDress(int dressId) {
 		repository.deleteById(dressId);
+	}
+	
+	public void removeDresses() {
+		repository.deleteAll(getAllDresses());
 	}
 
 }
