@@ -15,13 +15,14 @@ import javax.persistence.OneToMany;
 
 import com.lamadrid.store.utilities.NotFoundException;
 
-@Entity(name = "purshase")
+@Entity(name = "purchase")
 public class Purchase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 	@Column(name = "purchase_date")
 	private Calendar purchaseDate;
+	private double payment;
 
 	@OneToMany(targetEntity = Dress.class)
 	@JoinColumn(name = "dress_id")
@@ -41,6 +42,10 @@ public class Purchase {
 
 	public Integer getId() {
 		return id;
+	}
+	
+	public double getPayment() {
+		return payment;
 	}
 
 	public List<Dress> getDresses() {
