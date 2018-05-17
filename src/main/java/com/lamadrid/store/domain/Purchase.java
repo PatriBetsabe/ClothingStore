@@ -43,7 +43,7 @@ public class Purchase {
 		return id;
 	}
 
-	public List<Dress> getDesses() {
+	public List<Dress> getDresses() {
 		return new ArrayList<>(dresses);
 	}
 
