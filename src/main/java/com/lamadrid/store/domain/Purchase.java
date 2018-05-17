@@ -22,6 +22,7 @@ public class Purchase {
 	private Integer id;
 	@Column(name = "purchase_date")
 	private Calendar purchaseDate;
+	private double payment;
 
 	@OneToMany(targetEntity = Dress.class)
 	@JoinColumn(name = "dress_id")
@@ -42,8 +43,12 @@ public class Purchase {
 	public Integer getId() {
 		return id;
 	}
+	
+	public double getPayment() {
+		return payment;
+	}
 
-	public List<Dress> getDesses() {
+	public List<Dress> getDresses() {
 		return new ArrayList<>(dresses);
 	}
 

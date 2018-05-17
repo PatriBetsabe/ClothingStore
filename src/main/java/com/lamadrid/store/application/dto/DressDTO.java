@@ -17,11 +17,12 @@ public class DressDTO {
 	
 	public DressDTO(Dress dress) throws NotFoundException {
 		if(dress==null) throw new NotFoundException();
-		model=dress.getModel();
-		color=dress.getColor();
-		imageUrl=dress.getImageUrl();
-		size=dress.getSize();
-		price=dress.getPrice();
+		this.id=dress.getId();
+		this.model=dress.getModel();
+		this.color=dress.getColor();
+		this.imageUrl=dress.getImageUrl();
+		this.size=dress.getSize();
+		this.price=dress.getPrice();
 	}
 
 	public int getId() {
