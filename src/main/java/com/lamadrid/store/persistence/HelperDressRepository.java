@@ -11,8 +11,7 @@ import com.lamadrid.store.domain.Purchase;
 
 public interface HelperDressRepository extends CrudRepository<Dress, Integer> {
 
-	List<Dress> findAllByPurchase(Purchase purchase);
 	
-	@Transactional
-	void removeByPurchase(Purchase purchase);
+	/*@Transactional
+	void removeByPurchase(Purchase purchase);*/
 }

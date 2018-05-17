@@ -29,15 +29,7 @@ public class DressRepository {
 		}
 	}
 	
-	public List<Dress> getAllDresses(Purchase purchase){
-		List<Dress> result = new ArrayList<>();
-		
-		for(Dress d : repository.findAllByPurchase(purchase)) {
-			result.add(d);
-		}
-		return result;
-	}
-	
+
 	public Dress getDressById(int dressId) throws NotFoundException {
 		try {
 			return repository.findById(dressId).get();
@@ -46,9 +38,9 @@ public class DressRepository {
 		}
 	}
 	
-	public void removeDresses(Purchase purchase) {
+	/*public void removeDresses(Purchase purchase) {
 		repository.removeByPurchase(purchase);
-	}
+	}*/
 	
 	public void removeDress(int dressId) {
 		repository.deleteById(dressId);
