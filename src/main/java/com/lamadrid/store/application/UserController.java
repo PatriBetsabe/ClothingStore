@@ -87,6 +87,7 @@ public class UserController {
 	public void removeUser(int userId) {
 
 		userRepository.removeUser(userId);
+		
 	}
 
 	public void removeUsers() {
@@ -95,6 +96,23 @@ public class UserController {
 	}
 
 	public PurchaseDTO addPurchase(int userId, DressDTO dressToBuy, PurchaseDTO newPurchase) throws NotFoundException, InvalidParamException {
+
+		User user = userRepository.getUserById(userId);
+
+		
+		Dress dress = new Dress(dressToBuy.getModel(), dressToBuy.getColor(), dressToBuy.getSize(),
+				dressToBuy.getPrice(), dressToBuy.getImageUrl());
+
+		Purchase purchase = new Purchase(newPurchase.getPayment());
+
+		userRepository.save(user);
+		user.addPurchase(purchase.addDress(dress));
+	
+
+		return new PurchaseDTO(purchase);
+	}
+	
+	/*public PurchaseDTO addPurchase(int userId, DressDTO dressToBuy, PurchaseDTO newPurchase) throws NotFoundException, InvalidParamException {
 
 		User user = userRepository.getUserById(userId);
 
@@ -108,6 +126,6 @@ public class UserController {
 	
 
 		return new PurchaseDTO(purchase);
-	}
+	}*/
 
 }

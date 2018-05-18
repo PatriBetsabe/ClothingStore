@@ -32,7 +32,7 @@ public class Purchase {
 
 	}
 
-	public Purchase(String description, double payment) {
+	public Purchase(double payment) {
 		purchaseDate = Calendar.getInstance();
 		payment = this.payment;
 	}

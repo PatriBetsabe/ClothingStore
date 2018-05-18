@@ -34,8 +34,11 @@ public class User {
 	public User(String name, String email, String password) throws InvalidParamException {
 		checkValidName(name);
 		checkValidPassword(password);
-		if (!email.contains("@"))
+		checkValidEmail(email);
+		
+		if(!email.contains("@"))
 			throw new InvalidParamException();
+		
 		this.name = name;
 		this.email = email;
 		this.password = Encryptor.encryptPassword(password);
@@ -48,6 +51,11 @@ public class User {
 
 	private void checkValidPassword(String password) throws InvalidParamException {
 		if (password == null || password.length() < 7)
+			throw new InvalidParamException();
+	}
+	
+	private void checkValidEmail(String email) throws InvalidParamException {
+		if(email== null || email.equals(""))
 			throw new InvalidParamException();
 	}
 	
@@ -77,9 +85,11 @@ public class User {
 		return email;
 	}
 
-	public void setEmail(String email) throws InvalidParamException {	
-		if (email.equals("") || email.contains("@"))
-			throw new InvalidParamException();
+	public void setEmail(String email) throws InvalidParamException{	
+		checkValidEmail(email);
+		
+		if(!email.contains("@"))
+				throw new InvalidParamException();
 		
 		this.email = email;
 	}
