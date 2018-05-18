@@ -1,9 +1,13 @@
 package com.lamadrid.store.persistence;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.lamadrid.store.domain.Purchase;
+import com.lamadrid.store.domain.User;
 import com.lamadrid.store.utilities.InvalidParamException;
 import com.lamadrid.store.utilities.NotFoundException;
 
@@ -33,9 +37,20 @@ public class PurchaseRepository {
 		}
 	}
 	
-	/*public void removePurchases(User user) {
+	public List<Purchase> getAllPurchases(User user) {
+		
+		List<Purchase> result = new ArrayList<>();
+		
+		for(Purchase p : repository.findAllByUser(user)) {
+			result.add(p);
+		}
+		return result;
+			
+	}
+	
+	public void removePurchases(User user) {
 		repository.removeByUser(user);
-	}*/
+	}
 	
 	public void removePurchase(int purchaseId) {
 		repository.deleteById(purchaseId);

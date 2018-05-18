@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.lamadrid.store.application.dto.DressDTO;
+import com.lamadrid.store.application.dto.PurchaseDTO;
 import com.lamadrid.store.domain.Dress;
+import com.lamadrid.store.domain.Purchase;
 import com.lamadrid.store.persistence.DressRepository;
+import com.lamadrid.store.persistence.PurchaseRepository;
 import com.lamadrid.store.utilities.InvalidParamException;
 import com.lamadrid.store.utilities.NotFoundException;
 
@@ -17,6 +20,8 @@ public class DressController {
 
 	@Autowired
 	private DressRepository dressRepository;
+	@Autowired
+	private PurchaseRepository purchaseRepository;
 
 	public DressDTO createDress(DressDTO dressDTO) throws InvalidParamException, NotFoundException{
 
@@ -79,6 +84,19 @@ public class DressController {
 		Dress dress = dressRepository.getDressById(dressId);
 		
 		return new DressDTO(dress);
+	}
+	
+	public PurchaseDTO addDressToPurchase(int dressId, PurchaseDTO newPurchase) throws NotFoundException, InvalidParamException {
+		
+		Dress dress = dressRepository.getDressById(dressId);
+
+		
+		Purchase purchase = new Purchase();
+		
+		purchaseRepository.save(purchase);
+		dressRepository.save(dress);
+		
+		return new PurchaseDTO(purchase);
 	}
 	
 	public void removeDress(int dressId) {

@@ -1,18 +1,12 @@
 package com.lamadrid.store.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 
 import com.lamadrid.store.utilities.Encryptor;
 import com.lamadrid.store.utilities.InvalidParamException;
-import com.lamadrid.store.utilities.NotFoundException;
 
 @Entity(name = "user")
 public class User {
@@ -23,9 +17,9 @@ public class User {
 	private String email;
 	private String password;
 
-	@OneToMany(targetEntity = Purchase.class)
+	/*@OneToMany(targetEntity = Purchase.class)
 	@JoinColumn(name = "purchase_id")
-	private List<Purchase> purchases = new ArrayList<>();
+	private List<Purchase> purchases = new ArrayList<>();*/
 
 	public User() {
 
@@ -103,7 +97,7 @@ public class User {
 		this.password = password;
 	}
 
-	public List<Purchase> getPurchases() {
+	/*public List<Purchase> getPurchases() {
 		return new ArrayList<>(purchases);
 	}
 
@@ -115,7 +109,7 @@ public class User {
 		purchases.add(purchase);
 		
 		return purchase;
-	}
+	}*/
 
 	
 }

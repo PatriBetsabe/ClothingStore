@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.lamadrid.store.application.dto.PurchaseDTO;
-import com.lamadrid.store.domain.Dress;
 import com.lamadrid.store.domain.Purchase;
-import com.lamadrid.store.persistence.DressRepository;
+import com.lamadrid.store.domain.User;
 import com.lamadrid.store.persistence.PurchaseRepository;
 import com.lamadrid.store.utilities.InvalidParamException;
 import com.lamadrid.store.utilities.NotFoundException;
@@ -15,11 +14,13 @@ import com.lamadrid.store.utilities.NotFoundException;
 public class PurchaseController {
 
 	@Autowired
+	private UserController userController;
+	@Autowired
 	private PurchaseRepository purchaseRepository;
 	@Autowired
-	private DressRepository dressRepository;
+	private DressController dressController;
 
-	public PurchaseDTO addDress(int dressId, PurchaseDTO newPurchase) throws NotFoundException, InvalidParamException {
+	/*public PurchaseDTO addDress(int dressId, PurchaseDTO newPurchase) throws NotFoundException, InvalidParamException {
 		
 		Dress dress = dressRepository.getDressById(dressId);
 
@@ -30,6 +31,15 @@ public class PurchaseController {
 		
 		return new PurchaseDTO(purchase);
 
+	}*/
+	
+	public PurchaseDTO addPurchaseToUser(int userId, PurchaseDTO purchaseToUser) throws NotFoundException, InvalidParamException {
+		
+		User user = userController.getUser(userId);
+		
+		Purchase purchase = new Purchase(user, purchaseToUser.getPayment());
+		
+		return new PurchaseDTO(purchase);
 	}
 
 }

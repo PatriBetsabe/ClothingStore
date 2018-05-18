@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.lamadrid.store.utilities.InvalidParamException;
 
@@ -27,11 +29,15 @@ public class Dress {
 	public static final int XXL = 6;
 	
 	private int size;
+	
+	@ManyToOne(targetEntity = Purchase.class)
+	@JoinColumn(name = "purchase_id")
+	private Purchase purchase;
 
 	public Dress() {
 
 	}
-
+	
 	public Dress(String model, String color, int size, double price, String imageUrl) throws InvalidParamException{
 		if (model.equals("") || color.equals("") || price <= 0) throw new InvalidParamException();
 		
@@ -39,6 +45,21 @@ public class Dress {
 		
 		if(size != XS && size != S && size != M && size != L && size != XL && size != XXL) throw new InvalidParamException();
 		
+		this.size = size;
+		this.model = model;
+		this.color = color;
+		this.price = price;
+		this.imageUrl = imageUrl;
+	}
+
+	public Dress(Purchase purchase, String model, String color, int size, double price, String imageUrl) throws InvalidParamException{
+		if (model.equals("") || color.equals("") || price <= 0) throw new InvalidParamException();
+		
+		if (!imageUrl.contains(".jpg")) throw new InvalidParamException();
+		
+		if(size != XS && size != S && size != M && size != L && size != XL && size != XXL) throw new InvalidParamException();
+		
+		this.purchase = purchase;
 		this.size = size;
 		this.model = model;
 		this.color = color;

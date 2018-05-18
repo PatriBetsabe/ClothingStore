@@ -6,11 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.lamadrid.store.application.dto.DressDTO;
-import com.lamadrid.store.application.dto.PurchaseDTO;
 import com.lamadrid.store.application.dto.UserDTO;
-import com.lamadrid.store.domain.Dress;
-import com.lamadrid.store.domain.Purchase;
 import com.lamadrid.store.domain.User;
 import com.lamadrid.store.persistence.UserRepository;
 import com.lamadrid.store.utilities.InvalidParamException;
@@ -95,7 +91,7 @@ public class UserController {
 		userRepository.removeUsers();
 	}
 
-	public PurchaseDTO addPurchase(int userId, DressDTO dressToBuy, PurchaseDTO newPurchase) throws NotFoundException, InvalidParamException {
+	/*public PurchaseDTO addPurchase(int userId, DressDTO dressToBuy, PurchaseDTO newPurchase) throws NotFoundException, InvalidParamException {
 
 		User user = userRepository.getUserById(userId);
 
@@ -110,7 +106,7 @@ public class UserController {
 	
 
 		return new PurchaseDTO(purchase);
-	}
+	}*/
 	
 	/*public PurchaseDTO addPurchase(int userId, DressDTO dressToBuy, PurchaseDTO newPurchase) throws NotFoundException, InvalidParamException {
 

@@ -1,9 +1,7 @@
 package com.lamadrid.store.domain;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,9 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
-import com.lamadrid.store.utilities.NotFoundException;
+import com.lamadrid.store.utilities.InvalidParamException;
 
 @Entity(name = "purchase")
 public class Purchase {
@@ -23,18 +21,38 @@ public class Purchase {
 	@Column(name = "purchase_date")
 	private Calendar purchaseDate;
 	private double payment;
+	
+	@ManyToOne(targetEntity = User.class)
+	@JoinColumn(name = "user_id")
+	private User user;
 
-	@OneToMany(targetEntity = Dress.class)
+	/*@OneToMany(targetEntity = Dress.class)
 	@JoinColumn(name = "dress_id")
-	private List<Dress> dresses = new ArrayList<>();
+	private List<Dress> dresses = new ArrayList<>();*/
 
 	public Purchase() {
 
 	}
 
-	public Purchase(double payment) {
-		purchaseDate = Calendar.getInstance();
-		payment = this.payment;
+	public Purchase(User user, double payment) throws InvalidParamException {
+		if(payment <= 0)
+			throw new InvalidParamException();
+		
+		if(user==null) throw new InvalidParamException();
+		
+		this.user = user;
+		this.purchaseDate = Calendar.getInstance();
+		this.payment = payment;
+	}
+	
+	public Purchase(double payment) throws InvalidParamException {
+		if(payment <= 0)
+			throw new InvalidParamException();
+		
+		if(user==null) throw new InvalidParamException();
+		
+		this.purchaseDate = Calendar.getInstance();
+		this.payment = payment;
 	}
 
 
@@ -50,7 +68,7 @@ public class Purchase {
 		return payment;
 	}
 
-	public List<Dress> getDresses() {
+	/*public List<Dress> getDresses() {
 		return new ArrayList<>(dresses);
 	}
 
@@ -60,6 +78,6 @@ public class Purchase {
 		dresses.add(dress);
 		
 		return dress;
-	}
+	}*/
 
 }
