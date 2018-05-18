@@ -32,9 +32,11 @@ public class Purchase {
 
 	}
 
-	public Purchase(String description) {
+	public Purchase(String description, double payment) {
 		purchaseDate = Calendar.getInstance();
+		payment = this.payment;
 	}
+
 
 	public Date getPurchaseDate() {
 		return purchaseDate.getTime();
@@ -52,10 +54,12 @@ public class Purchase {
 		return new ArrayList<>(dresses);
 	}
 
-	public void addDress(Dress dress) throws NotFoundException {
+	public Dress addDress(Dress dress) throws NotFoundException {
 		if (dress == null)
 			throw new NotFoundException();
 		dresses.add(dress);
+		
+		return dress;
 	}
 
 }

@@ -33,7 +33,7 @@ public class DressController {
 		
 		Dress dress = dressRepository.getDressById(dressId);
 		
-		if(dressToUpdate.getPrice()<=0)
+		if(dressToUpdate.getPrice()>0)
 			dress.setPrice(dressToUpdate.getPrice());
 		
 		if(!dressToUpdate.getModel().equals(""))
@@ -42,8 +42,11 @@ public class DressController {
 		if(!dressToUpdate.getColor().equals(""))
 			dress.setColor(dressToUpdate.getColor());
 		
-		if(dressToUpdate.getSize()<=0)
+		if(dressToUpdate.getSize()>0)
 			dress.setSize(dressToUpdate.getSize());
+		
+		if(!dressToUpdate.getImageUrl().equals(""))
+			dress.setImageUrl(dressToUpdate.getImageUrl());
 	
 		dressRepository.save(dress);
 		

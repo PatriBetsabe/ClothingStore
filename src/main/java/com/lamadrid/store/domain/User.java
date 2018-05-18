@@ -40,6 +40,25 @@ public class User {
 		this.email = email;
 		this.password = Encryptor.encryptPassword(password);
 	}
+	
+	private void checkValidName(String name) throws InvalidParamException {
+		if (name == null || name.equals(""))
+			throw new InvalidParamException();
+	}
+
+	private void checkValidPassword(String password) throws InvalidParamException {
+		if (password == null || password.length() < 7)
+			throw new InvalidParamException();
+	}
+	
+	public void checkPasswordIsCorrect(String password) throws InvalidParamException {
+		Encryptor.checkIfPasswordMatches(password, this.password);
+	}
+
+	public void checkEmailCorrect(String email) throws InvalidParamException {
+		if (!this.email.equals(email))
+			throw new InvalidParamException();
+	}
 
 	public Integer getId() {
 		return id;
@@ -78,29 +97,15 @@ public class User {
 		return new ArrayList<>(purchases);
 	}
 
-	public void addPurchase(Purchase purchase) throws NotFoundException {
+	public Purchase addPurchase(Dress dress) throws NotFoundException{
+		Purchase purchase = new Purchase();
+		purchase.addDress(dress);
 		if (purchase == null)
 			throw new NotFoundException();
 		purchases.add(purchase);
+		
+		return purchase;
 	}
 
-	public void checkPasswordIsCorrect(String password) throws InvalidParamException {
-		Encryptor.checkIfPasswordMatches(password, this.password);
-	}
-
-	private void checkValidName(String name) throws InvalidParamException {
-		if (name == null || name.equals(""))
-			throw new InvalidParamException();
-	}
-
-	private void checkValidPassword(String password) throws InvalidParamException {
-		if (password == null || password.length() < 7)
-			throw new InvalidParamException();
-	}
-
-	public void checkEmailCorrect(String email) throws InvalidParamException {
-		if (!this.email.equals(email))
-			throw new InvalidParamException();
-	}
-
+	
 }

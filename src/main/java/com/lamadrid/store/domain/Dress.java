@@ -94,10 +94,9 @@ public class Dress {
 		return imageUrl;
 	}
 	
-	public void setImageUrl(String imageUrl) throws InvalidParamException {
-		if (!imageUrl.contains(".jpg"))
-			throw new InvalidParamException();
-		this.imageUrl = imageUrl;
+	public void setImageUrl(String imageUrl){
+		if (imageUrl.contains(".jpg"))
+			this.imageUrl = imageUrl;
 	}
 
 }

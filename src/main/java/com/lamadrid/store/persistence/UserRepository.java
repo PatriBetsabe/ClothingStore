@@ -50,4 +50,12 @@ public class UserRepository {
 			throw new NotFoundException();
 		}
 	}
+	
+	public void removeUser(int userId) {
+		repository.deleteById(userId);
+	}
+	
+	public void removeUsers() {
+		repository.deleteAll(getAllUsers());
+	}
 }
