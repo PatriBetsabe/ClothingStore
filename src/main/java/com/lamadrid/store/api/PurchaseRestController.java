@@ -16,7 +16,6 @@ import com.lamadrid.store.utilities.NotFoundException;
 
 @RestController
 @CrossOrigin
-//@RequestMapping("users/{userId}/purchases")
 public class PurchaseRestController {
 	
 	@Autowired
