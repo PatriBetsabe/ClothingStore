@@ -19,7 +19,7 @@ import com.lamadrid.store.utilities.NotFoundException;
 public class PurchaseDressRestController {
 	
 	@Autowired
-	private PurchaseDressController controller;
+	private PurchaseDressController controllller;
 	
 	private String toJson(Object object) {
 		
@@ -27,11 +27,12 @@ public class PurchaseDressRestController {
 		return gson.toJson(object);
 	}
 	
-	@PostMapping(value = "/purchaseDress/{purchaseId}/{dressId}" , produces = "application/json;charset=UTF-8")
-	public String createPurchaseDress(@PathVariable int purchaseId, int dressId, @RequestBody String json ) throws NotFoundException, InvalidParamException {
+	@PostMapping(value = "/purchase/{purchaseId}/dress/{dressId}" , produces = "application/json;charset=UTF-8")
+	public String createPurchaseDress(@PathVariable int purchaseId, Integer dressId, @RequestBody String json ) throws NotFoundException, InvalidParamException {
 		PurchaseDressDTO purchaseDressDTO = new Gson().fromJson(json, PurchaseDressDTO.class);
 		
-		PurchaseDressDTO purchaseDress = controller.addDressToPurchase(purchaseId, dressId, purchaseDressDTO);
+	
+		PurchaseDressDTO purchaseDress = controllller.addDressToPurchase(purchaseId, dressId, purchaseDressDTO);
 		
 		return toJson(purchaseDress);
 	

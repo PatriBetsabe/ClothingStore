@@ -39,10 +39,10 @@ public class DressController {
 		Dress dress = dressRepository.getDressById(dressId);
 		
 		if(dressToUpdate.getPrice_sold()>0)
-			dress.setPrice(dressToUpdate.getPrice_sold());
+			dress.setPrice_sold(dressToUpdate.getPrice_sold());
 		
 		if(dressToUpdate.getPrice_cost()>0)
-			dress.setPrice(dressToUpdate.getPrice_cost());
+			dress.setPrice_cost(dressToUpdate.getPrice_cost());
 		
 		if(!dressToUpdate.getModel().equals(""))
 			dress.setModel(dressToUpdate.getModel());

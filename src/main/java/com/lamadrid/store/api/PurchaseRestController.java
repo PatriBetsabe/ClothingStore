@@ -38,14 +38,4 @@ public class PurchaseRestController {
 		return toJson(purchase);
 	}
 	
-	/*@PostMapping(value= "/purchases/{dressId}" , produces = "application/json;charset=UTF-8")
-	public String addDress(@PathVariable int dressId, @RequestBody String jPurchase) throws NotFoundException, InvalidParamException {
-		
-		PurchaseDTO purchase = new Gson().fromJson(jPurchase, PurchaseDTO.class);
-		
-		PurchaseDTO newPurchase = controller.addDress(dressId, purchase);
-		
-		return toJson(newPurchase);
-	}*/
-
 }

@@ -13,26 +13,28 @@ import com.lamadrid.store.utilities.NotFoundException;
 
 @Controller
 public class PurchaseDressController {
-	
+
 	@Autowired
 	private PurchaseDressRepository purchaseDressRepository;
 	@Autowired
 	private DressController dressController;
 	@Autowired
 	private PurchaseController purchaseController;
-	
-	public PurchaseDressDTO addDressToPurchase(int purchaseId, int dressId, PurchaseDressDTO newPurchaseDress) throws NotFoundException, InvalidParamException {
-		
+
+	public PurchaseDressDTO addDressToPurchase(int purchaseId, int dressId, PurchaseDressDTO newPurchaseDress)
+			throws NotFoundException, InvalidParamException {
+
 		Purchase purchase = purchaseController.getPurchase(purchaseId);
-		
+
 		Dress dress = dressController.getDress(dressId);
-		
-		PurchaseDress purchaseDress = new PurchaseDress(purchase,dress, newPurchaseDress.getCost());
-		
+
+		PurchaseDress purchaseDress = new PurchaseDress(purchase, dress, newPurchaseDress.getCost(),
+				newPurchaseDress.getQuantity());
+
 		purchaseDressRepository.save(purchaseDress);
-		
+
 		return new PurchaseDressDTO(purchaseDress);
-		
+
 	}
 
 }

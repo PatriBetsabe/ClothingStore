@@ -6,8 +6,15 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.lamadrid.store.utilities.InvalidParamException;
 import com.lamadrid.store.utilities.NotFoundException;
@@ -64,10 +71,10 @@ public class Purchase {
 		return new ArrayList<>(dresses);
 	}
 
-	public void addDress(Dress dress) throws NotFoundException {
+	public void addDress(Dress dress, double cost, int quantity) throws NotFoundException {
 		if (dress == null)
 			throw new NotFoundException();
-		PurchaseDress purchaseDress = new PurchaseDress(this, dress, payment);
+		PurchaseDress purchaseDress = new PurchaseDress(this, dress, cost, quantity);
 		dresses.add(purchaseDress);
 		dress.getPurchases().add(purchaseDress);
 		

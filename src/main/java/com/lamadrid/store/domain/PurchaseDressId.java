@@ -1,5 +1,6 @@
 package com.lamadrid.store.domain;
 
+
 import java.io.Serializable;
 
 import javax.persistence.Column;

@@ -20,7 +20,6 @@ public class Dress {
 	private Integer id;
 	private String model;
 	private String color;
-	private double price;
 	@Column(name = "image_url")
 	private String imageUrl;
 
@@ -97,16 +96,6 @@ public class Dress {
 		if (size <= 0)
 			throw new InvalidParamException();
 		this.size = size;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) throws InvalidParamException {
-		if (price <= 0)
-			throw new InvalidParamException();
-		this.price = price;
 	}
 
 	public String getImageUrl() {

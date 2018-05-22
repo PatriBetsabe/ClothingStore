@@ -24,14 +24,16 @@ public class PurchaseDress {
  
 
 	private double cost;
+	private int quantity;
  
 	private PurchaseDress() {}
  
-	public PurchaseDress(Purchase purchase, Dress dress, double cost) {
+	public PurchaseDress(Purchase purchase, Dress dress, double cost , int quantity) {
     	this.purchase = purchase;
     	this.dress = dress;
     	this.id = new PurchaseDressId(purchase.getId(), dress.getId());
     	this.cost = cost;
+    	this.quantity = quantity;
 	}
  
 	public double getCost() {
@@ -53,8 +55,15 @@ public class PurchaseDress {
 	public void setDress(Dress dress) {
 		this.dress = dress;
 	}
+
 	
-	
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
 	public PurchaseDressId getId() {
 		return id;
