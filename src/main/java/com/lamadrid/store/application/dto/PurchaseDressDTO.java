@@ -9,14 +9,17 @@ public class PurchaseDressDTO {
 	//@Expose
 	//private PurchaseDressId id;
 	@Expose
-	private double cost;
+	private double price_unit;
 	@Expose
-	private int quantity;
+	private double quantity;
+	@Expose
+	private double subtotal;
 
 	public PurchaseDressDTO(PurchaseDress purchaseDress) {
 		//this.id = purchaseDress.getId();
-		this.cost = purchaseDress.getCost();
+		this.price_unit = purchaseDress.getPrice_unit();
 		this.quantity = purchaseDress.getQuantity();
+		this.subtotal = purchaseDress.getSubtotal();
 
 	}
 
@@ -24,12 +27,17 @@ public class PurchaseDressDTO {
 		return null;//return id;
 	}
 
-	public double getCost() {
-		return cost;
+	public double getPrice_unit() {
+		return price_unit;
 	}
 	
-	public int getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
+	
+	public double getSubtotal() {
+		return subtotal;
+	}
+	
 
 }

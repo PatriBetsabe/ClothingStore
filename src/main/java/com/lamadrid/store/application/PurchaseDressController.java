@@ -28,8 +28,7 @@ public class PurchaseDressController {
 
 		Dress dress = dressController.getDress(dressId);
 
-		PurchaseDress purchaseDress = new PurchaseDress(purchase, dress, newPurchaseDress.getCost(),
-				newPurchaseDress.getQuantity());
+		PurchaseDress purchaseDress = new PurchaseDress(purchase, dress,newPurchaseDress.getQuantity());
 
 		purchaseDressRepository.save(purchaseDress);
 

@@ -17,28 +17,25 @@ import com.lamadrid.store.utilities.NotFoundException;
 @RestController
 @CrossOrigin
 public class PurchaseDressRestController {
-	
+
 	@Autowired
 	private PurchaseDressController controller;
-	
+
 	private String toJson(Object object) {
-		
+
 		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 		return gson.toJson(object);
 	}
-	
-	@PostMapping(value = "/purchase/{purchaseId}/dress/{dressId}" , produces = "application/json;charset=UTF-8")
-	public String createPurchaseDress(@PathVariable int purchaseId,@PathVariable int dressId, @RequestBody String json ) throws NotFoundException, InvalidParamException {
-		PurchaseDressDTO purchaseDressDTO = new Gson().fromJson(json, PurchaseDressDTO.class);
-		
-	
-		PurchaseDressDTO purchaseDress = controller.addDressToPurchase(purchaseId, dressId, purchaseDressDTO);
-		
-		return toJson(purchaseDress);
-	
-	}
-	
-	
 
+	@PostMapping(value = "/purchase/{purchaseId}/dress/{dressId}", produces = "application/json;charset=UTF-8")
+	public String createPurchaseDress(@PathVariable int purchaseId, @PathVariable int dressId, @RequestBody String json)
+			throws NotFoundException, InvalidParamException {
+		PurchaseDressDTO purchaseDressDTO = new Gson().fromJson(json, PurchaseDressDTO.class);
+
+		PurchaseDressDTO purchaseDress = controller.addDressToPurchase(purchaseId, dressId, purchaseDressDTO);
+
+		return toJson(purchaseDress);
+
+	}
 
 }

@@ -71,10 +71,10 @@ public class Purchase {
 		return new ArrayList<>(dresses);
 	}
 
-	public void addDress(Dress dress, double cost, int quantity) throws NotFoundException {
+	public void addDress(Dress dress, double quantity) throws NotFoundException {
 		if (dress == null)
 			throw new NotFoundException();
-		PurchaseDress purchaseDress = new PurchaseDress(this, dress, cost, quantity);
+		PurchaseDress purchaseDress = new PurchaseDress(this, dress, quantity);
 		dresses.add(purchaseDress);
 		dress.getPurchases().add(purchaseDress);
 		

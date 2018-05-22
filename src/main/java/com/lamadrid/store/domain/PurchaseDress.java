@@ -23,23 +23,41 @@ public class PurchaseDress {
 	private Dress dress;
  
 
-	private double cost;
-	private int quantity;
+	private double price_unit;
+	private double quantity;
+	private double subtotal;
  
 	private PurchaseDress() {}
  
-	public PurchaseDress(Purchase purchase, Dress dress, double cost , int quantity) {
+	public PurchaseDress(Purchase purchase, Dress dress, double quantity) {
     	this.purchase = purchase;
     	this.dress = dress;
     	this.id = new PurchaseDressId(purchase.getId(), dress.getId());
-    	this.cost = cost;
+    	this.price_unit = dress.getPrice_sold();
     	this.quantity = quantity;
+    	this.subtotal = dress.getPrice_sold()*quantity;
 	}
  
-	public double getCost() {
-		return cost;
+	public double getPrice_unit() {
+		return price_unit;
 	}
 	
+	public double getSubtotal() {
+		return subtotal;
+	}
+
+	public void setSubtotal(double subtotal) {
+		this.subtotal = subtotal;
+	}
+
+	public void setPrice_unit(double price_unit) {
+		this.price_unit = price_unit;
+	}
+
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
+	}
+
 	public Purchase getPurchase() {
 		return purchase;
 	}
@@ -57,7 +75,7 @@ public class PurchaseDress {
 	}
 
 	
-	public int getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
 

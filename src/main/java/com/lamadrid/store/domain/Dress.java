@@ -35,16 +35,16 @@ public class Dress {
 	private double price_sold;
 	private double price_cost;
 
-	
 	@OneToMany(mappedBy = "dress")
-	
+
 	private List<PurchaseDress> purchases = new ArrayList<>();
 
 	public Dress() {
 
 	}
 
-	public Dress(String model, String color, int size, double price_sold, double price_cost, int stock, String imageUrl) throws InvalidParamException {
+	public Dress(String model, String color, int size, double price_sold, double price_cost, int stock, String imageUrl)
+			throws InvalidParamException {
 		if (model.equals("") || color.equals("") || price_cost <= 0 || price_sold <= 0 || stock <= 0)
 			throw new InvalidParamException();
 
@@ -62,7 +62,6 @@ public class Dress {
 		this.stock = stock;
 		this.imageUrl = imageUrl;
 	}
-
 
 	public Integer getId() {
 		return id;
@@ -106,7 +105,7 @@ public class Dress {
 		if (imageUrl.contains(".jpg"))
 			this.imageUrl = imageUrl;
 	}
-	
+
 	public int getStock() {
 		return stock;
 	}
@@ -139,10 +138,8 @@ public class Dress {
 		this.purchases = purchases;
 	}
 
-
 	public List<PurchaseDress> getPurchases() {
 		return purchases;
 	}
-	
 
 }
