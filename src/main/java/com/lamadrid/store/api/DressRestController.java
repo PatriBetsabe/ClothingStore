@@ -33,7 +33,7 @@ public class DressRestController {
 	}
 	
 	@PostMapping(value = "/dresses" , produces = "application/json;charset=UTF-8" )
-	public String createDress(@RequestBody String jDress) throws InvalidParamException, NotFoundException {
+	public String createNewDress(@RequestBody String jDress) throws InvalidParamException, NotFoundException {
 		
 		DressDTO newDress = new Gson().fromJson(jDress, DressDTO.class);
 		

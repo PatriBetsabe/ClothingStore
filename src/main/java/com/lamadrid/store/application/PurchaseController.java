@@ -17,9 +17,25 @@ public class PurchaseController {
 	private UserController userController;
 	@Autowired
 	private PurchaseRepository purchaseRepository;
-	@Autowired
-	private DressController dressController;
 
+
+	public PurchaseDTO createPurchase(int userId, PurchaseDTO purchaseDTO ) throws NotFoundException, InvalidParamException {
+		
+		User user = userController.getUser(userId);
+		
+		Purchase purchase = new Purchase(user, purchaseDTO.getPayment(), purchaseDTO.getTotal());
+		
+		purchaseRepository.save(purchase);
+		
+		return new PurchaseDTO(purchase);
+	}
+	
+	Purchase getPurchase(int purchaseId) throws NotFoundException {
+		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
+
+		return purchase;
+	}
+	
 	/*public PurchaseDTO addDress(int dressId, PurchaseDTO newPurchase) throws NotFoundException, InvalidParamException {
 		
 		Dress dress = dressRepository.getDressById(dressId);
@@ -33,13 +49,13 @@ public class PurchaseController {
 
 	}*/
 	
-	public PurchaseDTO addPurchaseToUser(int userId, PurchaseDTO purchaseToUser) throws NotFoundException, InvalidParamException {
+	/*public PurchaseDTO addPurchaseToUser(int userId, PurchaseDTO purchaseToUser) throws NotFoundException, InvalidParamException {
 		
 		User user = userController.getUser(userId);
 		
 		Purchase purchase = new Purchase(user, purchaseToUser.getPayment());
 		
 		return new PurchaseDTO(purchase);
-	}
+	}*/
 
 }

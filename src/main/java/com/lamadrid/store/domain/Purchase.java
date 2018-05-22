@@ -1,58 +1,46 @@
 package com.lamadrid.store.domain;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.*;
 
 import com.lamadrid.store.utilities.InvalidParamException;
+import com.lamadrid.store.utilities.NotFoundException;
 
-@Entity(name = "purchase")
+@Entity(name = "purchase") 
 public class Purchase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 	@Column(name = "purchase_date")
 	private Calendar purchaseDate;
-	private double payment;
+	private int payment;
+	private double total;
 	
 	@ManyToOne(targetEntity = User.class)
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	/*@OneToMany(targetEntity = Dress.class)
-	@JoinColumn(name = "dress_id")
-	private List<Dress> dresses = new ArrayList<>();*/
+	@OneToMany( mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PurchaseDress> dresses = new ArrayList<>();
 
 	public Purchase() {
 
 	}
 
-	public Purchase(User user, double payment) throws InvalidParamException {
-		if(payment <= 0)
-			throw new InvalidParamException();
-		
+	public Purchase(User user, int payment, double total) throws InvalidParamException {
+				
 		if(user==null) throw new InvalidParamException();
 		
 		this.user = user;
 		this.purchaseDate = Calendar.getInstance();
 		this.payment = payment;
-	}
-	
-	public Purchase(double payment) throws InvalidParamException {
-		if(payment <= 0)
-			throw new InvalidParamException();
-		
-		if(user==null) throw new InvalidParamException();
-		
-		this.purchaseDate = Calendar.getInstance();
-		this.payment = payment;
+		this.total = total;
 	}
 
 
@@ -64,20 +52,42 @@ public class Purchase {
 		return id;
 	}
 	
-	public double getPayment() {
+	public int getPayment() {
 		return payment;
 	}
 
-	/*public List<Dress> getDresses() {
+	public double getTotal() {
+		return total;
+	}
+
+	public List<PurchaseDress> getPurchaseDresses() {
 		return new ArrayList<>(dresses);
 	}
 
-	public Dress addDress(Dress dress) throws NotFoundException {
+	public void addDress(Dress dress) throws NotFoundException {
 		if (dress == null)
 			throw new NotFoundException();
-		dresses.add(dress);
+		PurchaseDress purchaseDress = new PurchaseDress(this, dress, payment);
+		dresses.add(purchaseDress);
+		dress.getPurchases().add(purchaseDress);
 		
-		return dress;
-	}*/
 
+	}
+	
+	public void removeDress(Dress dress) {
+    	for (Iterator<PurchaseDress> iterator = dresses.iterator();
+         	iterator.hasNext(); ) {
+        	PurchaseDress purchaseDress = iterator.next();
+ 
+        	if (purchaseDress.getPurchase().equals(this) &&
+                	purchaseDress.getDress().equals(dress)) {
+            	iterator.remove();
+            	purchaseDress.getDress().getPurchases().remove(purchaseDress);
+            	purchaseDress.setPurchase(null);
+            	purchaseDress.setDress(null);
+        	}
+    	}
+	}
+ 
+	
 }

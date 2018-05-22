@@ -15,7 +15,9 @@ public class PurchaseDTO {
 	@Expose
 	private Date purchaseDate;
 	@Expose
-	private double payment;
+	private int payment;
+	@Expose
+	private double total;
 	/*@Expose
 	private List<DressDTO> dressesDTO = new ArrayList<>();*/
 	
@@ -24,6 +26,7 @@ public class PurchaseDTO {
 		this.id=purchase.getId();
 		this.purchaseDate=purchase.getPurchaseDate();
 		this.payment=purchase.getPayment();
+		this.total=purchase.getTotal();
 		//initListDressesDTO(purchase);
 	}
 
@@ -39,8 +42,12 @@ public class PurchaseDTO {
 		return id;
 	}
 
-	public double getPayment() {
+	public int getPayment() {
 		return payment;
+	}
+	
+	public double getTotal() {
+		return total;
 	}
 
 	/*public List<DressDTO> getDressesDTO() {

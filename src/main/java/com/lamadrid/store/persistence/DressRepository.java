@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.lamadrid.store.domain.Dress;
-import com.lamadrid.store.domain.Purchase;
 import com.lamadrid.store.utilities.InvalidParamException;
 import com.lamadrid.store.utilities.NotFoundException;
 
@@ -38,13 +37,13 @@ public class DressRepository {
 		}
 	}
 	
-	public Dress getDressByPurchase(int purchaseId) throws NotFoundException {
+	/*public Dress getDressByPurchase(int purchaseId) throws NotFoundException {
 		try {
 			return repository.findByPurchase(purchaseId);
 		}catch(Exception e) {
 			throw new NotFoundException();
 		}
-	}
+	}*/
 	
 	public List<Dress> getAllDresses() {
 		List<Dress> result = new ArrayList<>();
@@ -56,7 +55,7 @@ public class DressRepository {
 		return result;
 	}
 	
-	public List<Dress> getAllDressesByPurchase(Purchase purchase) {
+	/*public List<Dress> getAllDressesByPurchase(Purchase purchase) {
 		List<Dress> result = new ArrayList<>();
 		
 		for(Dress d : repository.findAllByPurchase(purchase)) {
@@ -69,7 +68,7 @@ public class DressRepository {
 	public void removeByPurchase(Purchase purchase) {
 		repository.removeByPurchase(purchase);
 		
-	}
+	}*/
 	
 	public void removeDress(int dressId) {
 		repository.deleteById(dressId);

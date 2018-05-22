@@ -26,7 +26,7 @@ public class DressController {
 	public DressDTO createDress(DressDTO dressDTO) throws InvalidParamException, NotFoundException{
 
 		Dress dress = new Dress(dressDTO.getModel(), dressDTO.getColor(), dressDTO.getSize(),
-				dressDTO.getPrice(), dressDTO.getImageUrl());
+				dressDTO.getPrice_sold(),dressDTO.getPrice_cost(), dressDTO.getStock(), dressDTO.getImageUrl());
 		
 		dressRepository.save(dress);
 		
@@ -38,8 +38,11 @@ public class DressController {
 		
 		Dress dress = dressRepository.getDressById(dressId);
 		
-		if(dressToUpdate.getPrice()>0)
-			dress.setPrice(dressToUpdate.getPrice());
+		if(dressToUpdate.getPrice_sold()>0)
+			dress.setPrice(dressToUpdate.getPrice_sold());
+		
+		if(dressToUpdate.getPrice_cost()>0)
+			dress.setPrice(dressToUpdate.getPrice_cost());
 		
 		if(!dressToUpdate.getModel().equals(""))
 			dress.setModel(dressToUpdate.getModel());
@@ -48,6 +51,9 @@ public class DressController {
 			dress.setColor(dressToUpdate.getColor());
 		
 		if(dressToUpdate.getSize()>0)
+			dress.setSize(dressToUpdate.getSize());
+		
+		if(dressToUpdate.getStock()>0)
 			dress.setSize(dressToUpdate.getSize());
 		
 		if(!dressToUpdate.getImageUrl().equals(""))

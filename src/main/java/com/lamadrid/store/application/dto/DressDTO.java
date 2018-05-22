@@ -11,9 +11,9 @@ public class DressDTO {
 	@Expose
 	private String model, color, imageUrl;
 	@Expose
-	private int size;
+	private int size,stock;
 	@Expose
-	private double price;
+	private double price_sold, price_cost;
 	
 	public DressDTO(Dress dress) throws NotFoundException {
 		if(dress==null) throw new NotFoundException();
@@ -22,7 +22,9 @@ public class DressDTO {
 		color=dress.getColor();
 		imageUrl=dress.getImageUrl();
 		size=dress.getSize();
-		price=dress.getPrice();
+		price_sold=dress.getPrice_sold();
+		price_cost=dress.getPrice_cost();
+		stock = dress.getStock();
 	}
 
 	public int getId() {
@@ -48,10 +50,20 @@ public class DressDTO {
 		if(this.size<=0) return 0;
 		return size;
 	}
+	
+	public int getStock() {
+		if(this.stock<=0) return 0;
+		return stock;
+	}
 
-	public double getPrice() {
-		if(this.price<=0) return 0;
-		return price;
+	public double getPrice_sold() {
+		if(this.price_sold<=0) return 0;
+		return price_sold;
+	}
+	
+	public double getPrice_cost() {
+		if(this.price_cost<=0) return 0;
+		return price_cost;
 	}
 	
 
