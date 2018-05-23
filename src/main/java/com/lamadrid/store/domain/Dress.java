@@ -37,7 +37,7 @@ public class Dress {
 
 	@OneToMany(mappedBy = "dress")
 
-	private List<PurchaseDress> purchases = new ArrayList<>();
+	private List<DressToPurchase> purchases = new ArrayList<>();
 
 	public Dress() {
 
@@ -110,7 +110,9 @@ public class Dress {
 		return stock;
 	}
 
-	public void setStock(int stock) {
+	public void setStock(int stock) throws InvalidParamException {
+		if (stock <= 0)
+			throw new InvalidParamException();
 		this.stock = stock;
 	}
 
@@ -134,11 +136,11 @@ public class Dress {
 		this.price_cost = price_cost;
 	}
 
-	public void setPurchases(List<PurchaseDress> purchases) {
+	public void setPurchases(List<DressToPurchase> purchases) {
 		this.purchases = purchases;
 	}
 
-	public List<PurchaseDress> getPurchases() {
+	public List<DressToPurchase> getPurchases() {
 		return purchases;
 	}
 

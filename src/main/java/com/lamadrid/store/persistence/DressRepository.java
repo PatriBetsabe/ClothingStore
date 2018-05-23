@@ -12,12 +12,12 @@ import com.lamadrid.store.utilities.NotFoundException;
 
 @Repository
 public class DressRepository {
-	
+
 	@Autowired
 	private HelperDressRepository repository;
-	
-	public void save(Dress dress) throws InvalidParamException{
-		if(dress == null)
+
+	public void save(Dress dress) throws InvalidParamException {
+		if (dress == null)
 			throw new InvalidParamException();
 		try {
 			repository.save(dress);
@@ -25,56 +25,31 @@ public class DressRepository {
 			e.printStackTrace();
 			throw new InvalidParamException("Repeated dress");
 		}
-
 	}
-	
 
 	public Dress getDressById(int dressId) throws NotFoundException {
 		try {
 			return repository.findById(dressId).get();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			throw new NotFoundException();
 		}
 	}
-	
-	/*public Dress getDressByPurchase(int purchaseId) throws NotFoundException {
-		try {
-			return repository.findByPurchase(purchaseId);
-		}catch(Exception e) {
-			throw new NotFoundException();
-		}
-	}*/
-	
+
 	public List<Dress> getAllDresses() {
 		List<Dress> result = new ArrayList<>();
-		
-		for(Dress d : repository.findAll()) {
+
+		for (Dress d : repository.findAll()) {
 			result.add(d);
 		}
-		
+
 		return result;
 	}
-	
-	/*public List<Dress> getAllDressesByPurchase(Purchase purchase) {
-		List<Dress> result = new ArrayList<>();
-		
-		for(Dress d : repository.findAllByPurchase(purchase)) {
-			result.add(d);
-		}
-		
-		return result;
-	}
-	
-	public void removeByPurchase(Purchase purchase) {
-		repository.removeByPurchase(purchase);
-		
-	}*/
-	
+
 	public void removeDress(int dressId) {
 		repository.deleteById(dressId);
-		
+
 	}
-	
+
 	public void removeDresses() {
 		repository.deleteAll(getAllDresses());
 	}

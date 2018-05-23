@@ -43,10 +43,12 @@ public class PurchaseDTO {
 	}
 
 	public int getPayment() {
+		if(this.payment<0) return 0;
 		return payment;
 	}
 	
 	public double getTotal() {
+		if(this.total<0) return 0;
 		return total;
 	}
 

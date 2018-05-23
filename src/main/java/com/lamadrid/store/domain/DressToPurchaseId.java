@@ -6,7 +6,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 
 
-public class PurchaseDressId implements Serializable {
+public class DressToPurchaseId implements Serializable {
 	
 	@Column(name= "purchase_id")
 	private int purchaseId;
@@ -14,9 +14,9 @@ public class PurchaseDressId implements Serializable {
 	@Column( name = "dress_id")
 	private int dressId;
 	
-	private PurchaseDressId() {}
+	private DressToPurchaseId() {}
 	
-	public PurchaseDressId(int purchaseId, int dressId) {
+	public DressToPurchaseId(int purchaseId, int dressId) {
 		this.purchaseId = purchaseId;
 		this.dressId = dressId;
 	}

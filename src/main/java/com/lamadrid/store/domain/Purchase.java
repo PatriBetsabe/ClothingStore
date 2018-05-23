@@ -34,7 +34,7 @@ public class Purchase {
 	private User user;
 
 	@OneToMany( mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<PurchaseDress> dresses = new ArrayList<>();
+	private List<DressToPurchase> dresses = new ArrayList<>();
 
 	public Purchase() {
 
@@ -43,6 +43,8 @@ public class Purchase {
 	public Purchase(User user, int payment, double total) throws InvalidParamException {
 				
 		if(user==null) throw new InvalidParamException();
+		
+		if(payment <0 || total <0) throw new InvalidParamException();
 		
 		this.user = user;
 		this.purchaseDate = Calendar.getInstance();
@@ -62,19 +64,31 @@ public class Purchase {
 	public int getPayment() {
 		return payment;
 	}
+	
+	public void setPayment(int payment) throws InvalidParamException {
+		if (payment <= 0)
+			throw new InvalidParamException();
+		this.payment = payment;
+	}
 
 	public double getTotal() {
 		return total;
 	}
 
-	public List<PurchaseDress> getPurchaseDresses() {
+	public void setTotal(double total) throws InvalidParamException {
+		if (total <= 0)
+			throw new InvalidParamException();
+		this.total = total;
+	}
+
+	public List<DressToPurchase> getPurchaseDresses() {
 		return new ArrayList<>(dresses);
 	}
 
 	public void addDress(Dress dress, double quantity) throws NotFoundException {
 		if (dress == null)
 			throw new NotFoundException();
-		PurchaseDress purchaseDress = new PurchaseDress(this, dress, quantity);
+		DressToPurchase purchaseDress = new DressToPurchase(this, dress, quantity);
 		dresses.add(purchaseDress);
 		dress.getPurchases().add(purchaseDress);
 		
@@ -82,9 +96,9 @@ public class Purchase {
 	}
 	
 	public void removeDress(Dress dress) {
-    	for (Iterator<PurchaseDress> iterator = dresses.iterator();
+    	for (Iterator<DressToPurchase> iterator = dresses.iterator();
          	iterator.hasNext(); ) {
-        	PurchaseDress purchaseDress = iterator.next();
+        	DressToPurchase purchaseDress = iterator.next();
  
         	if (purchaseDress.getPurchase().equals(this) &&
                 	purchaseDress.getDress().equals(dress)) {

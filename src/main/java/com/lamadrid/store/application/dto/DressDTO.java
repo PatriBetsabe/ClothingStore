@@ -13,7 +13,8 @@ public class DressDTO {
 	@Expose
 	private int size,stock;
 	@Expose
-	private double price_sold, price_cost;
+	private double price_sold;
+	private double price_cost;
 	
 	public DressDTO(Dress dress) throws NotFoundException {
 		if(dress==null) throw new NotFoundException();

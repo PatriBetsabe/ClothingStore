@@ -8,11 +8,11 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
-@Entity(name = "purchase_dress")
-public class PurchaseDress {
+@Entity(name = "dress_to_purchase")
+public class DressToPurchase {
 	
 	@EmbeddedId
-	private PurchaseDressId id;
+	private DressToPurchaseId id;
  
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("purchase_id")
@@ -27,35 +27,43 @@ public class PurchaseDress {
 	private double quantity;
 	private double subtotal;
  
-	private PurchaseDress() {}
+	private DressToPurchase() {}
  
-	public PurchaseDress(Purchase purchase, Dress dress, double quantity) {
+	public DressToPurchase(Purchase purchase, Dress dress, double quantity) {
     	this.purchase = purchase;
     	this.dress = dress;
-    	this.id = new PurchaseDressId(purchase.getId(), dress.getId());
+    	this.id = new DressToPurchaseId(purchase.getId(), dress.getId());
     	this.price_unit = dress.getPrice_sold();
     	this.quantity = quantity;
     	this.subtotal = dress.getPrice_sold()*quantity;
 	}
  
+	public DressToPurchaseId getId() {
+		return id;
+	}
+	
 	public double getPrice_unit() {
 		return price_unit;
 	}
 	
+	public void setPrice_unit(double price_unit) {
+		this.price_unit = price_unit;
+	}
+	
+	public double getQuantity() {
+		return quantity;
+	}
+	
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
+	}
+
 	public double getSubtotal() {
 		return subtotal;
 	}
 
 	public void setSubtotal(double subtotal) {
 		this.subtotal = subtotal;
-	}
-
-	public void setPrice_unit(double price_unit) {
-		this.price_unit = price_unit;
-	}
-
-	public void setQuantity(double quantity) {
-		this.quantity = quantity;
 	}
 
 	public Purchase getPurchase() {
@@ -73,20 +81,7 @@ public class PurchaseDress {
 	public void setDress(Dress dress) {
 		this.dress = dress;
 	}
-
 	
-	public double getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public PurchaseDressId getId() {
-		return id;
-	}
-
 	@Override
 	public boolean equals(Object o) {
     	if (this == o) return true;
@@ -94,17 +89,14 @@ public class PurchaseDress {
     	if (o == null || getClass() != o.getClass())
         	return false;
  
-    	PurchaseDress that = (PurchaseDress) o;
+    	DressToPurchase that = (DressToPurchase) o;
     	return Objects.equals(purchase, that.purchase) &&
            	Objects.equals(dress, that.dress);
 	}
  
-
-
 	@Override
 	public int hashCode() {
     	return Objects.hash(purchase, dress);
 	}
-
 
 }

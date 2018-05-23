@@ -17,10 +17,6 @@ public class User {
 	private String email;
 	private String password;
 
-	/*@OneToMany(targetEntity = Purchase.class)
-	@JoinColumn(name = "purchase_id")
-	private List<Purchase> purchases = new ArrayList<>();*/
-
 	public User() {
 
 	}
@@ -97,19 +93,4 @@ public class User {
 		this.password = password;
 	}
 
-	/*public List<Purchase> getPurchases() {
-		return new ArrayList<>(purchases);
-	}
-
-	public Purchase addPurchase(Dress dress) throws NotFoundException{
-		Purchase purchase = new Purchase();
-		purchase.addDress(dress);
-		if (purchase == null)
-			throw new NotFoundException();
-		purchases.add(purchase);
-		
-		return purchase;
-	}*/
-
-	
 }

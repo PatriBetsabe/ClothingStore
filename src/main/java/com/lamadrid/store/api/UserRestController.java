@@ -71,7 +71,7 @@ public class UserRestController {
 	}
 	
 	@GetMapping(value = "/users/{userId}" , produces = "application/json;charset=UTF-8")
-	public String getDress(@PathVariable int userId) throws NotFoundException {
+	public String getUserDTO(@PathVariable int userId) throws NotFoundException {
 		
 		UserDTO user = controller.getUserDTO(userId);
 		
