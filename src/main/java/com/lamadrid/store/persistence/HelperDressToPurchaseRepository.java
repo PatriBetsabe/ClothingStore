@@ -13,11 +13,11 @@ import com.lamadrid.store.domain.DressToPurchaseId;
 
 public interface HelperDressToPurchaseRepository extends CrudRepository<DressToPurchase, DressToPurchaseId> {
 	
-	DressToPurchase findByPurchase(int purchaseId);
+	DressToPurchase findByPurchase(Purchase purchase);
 	
 	List<DressToPurchase> findAllByPurchase (Purchase purchase);
 	
-	DressToPurchase findByDress(int dressId);
+	DressToPurchase findByDress(Dress dress);
 	
 	List<DressToPurchase> findAllByDress (Dress dress);
 	

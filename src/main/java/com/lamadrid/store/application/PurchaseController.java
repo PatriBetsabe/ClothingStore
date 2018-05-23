@@ -1,5 +1,8 @@
 package com.lamadrid.store.application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -9,7 +12,7 @@ import com.lamadrid.store.domain.Dress;
 import com.lamadrid.store.domain.DressToPurchase;
 import com.lamadrid.store.domain.Purchase;
 import com.lamadrid.store.domain.User;
-import com.lamadrid.store.persistence.DressToRepositoryRepository;
+import com.lamadrid.store.persistence.DressToPurchaseRepository;
 import com.lamadrid.store.persistence.PurchaseRepository;
 import com.lamadrid.store.utilities.InvalidParamException;
 import com.lamadrid.store.utilities.NotFoundException;
@@ -22,7 +25,7 @@ public class PurchaseController {
 	@Autowired
 	private PurchaseRepository purchaseRepository;
 	@Autowired
-	private DressToRepositoryRepository purchaseDressRepository;
+	private DressToPurchaseRepository purchaseDressRepository;
 	@Autowired
 	private DressController dressController;
 	
@@ -51,6 +54,72 @@ public class PurchaseController {
 
 		return new DressToPurchaseDTO(purchaseDress);
 
+	}
+	
+	public void removeDressToPurchase(int dressId) throws NotFoundException {
+		
+		Dress dress = dressController.getDress(dressId);
+		
+		purchaseDressRepository.removeDressToPurchaseByDress(dress);
+
+	}
+	
+	public PurchaseDTO pay(int purchaseId) throws InvalidParamException, NotFoundException {
+		
+		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
+		
+		purchase.setPayment(1);
+		
+		purchaseRepository.save(purchase);
+		
+		return new PurchaseDTO(purchase);
+		
+	}
+	
+	public PurchaseDTO getPurchase(int userId, int purchaseId) throws NotFoundException, InvalidParamException {
+		User user = userController.getUser(userId);
+
+		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
+		
+		if(user.getId() != purchase.getUser().getId())
+			throw new InvalidParamException();
+		
+		return new PurchaseDTO(purchase);
+		
+		
+	}
+	
+	public List<PurchaseDTO> getAllPurchases(int userId) throws NotFoundException, InvalidParamException {
+		
+		User user = userController.getUser(userId);
+		
+		if(user.getId() != userId)
+			throw new InvalidParamException();
+		
+		List<PurchaseDTO> purchaseDTO = new ArrayList<>();
+		
+		List<Purchase> purchases = purchaseRepository.getAllPurchases(user);
+		for(Purchase p : purchases)
+			purchaseDTO.add(new PurchaseDTO(p));
+		
+		return purchaseDTO;
+	}
+	
+	public void removePurchases(int userId) throws NotFoundException {
+		User user = userController.getUser(userId);
+		purchaseRepository.removePurchases(user);
+	} 
+	
+	public void removePurchaseOfUser(int userId, int purchaseId) throws NotFoundException, InvalidParamException {
+		
+		User user = userController.getUser(userId);
+		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
+		
+		if(user.getId() != purchase.getUser().getId())
+			throw new InvalidParamException();
+		
+		purchaseRepository.removePurchase(purchaseId);
+		
 	}
 
 

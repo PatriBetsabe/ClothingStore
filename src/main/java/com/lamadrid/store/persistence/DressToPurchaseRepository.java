@@ -14,7 +14,7 @@ import com.lamadrid.store.utilities.InvalidParamException;
 import com.lamadrid.store.utilities.NotFoundException;
 
 @Repository
-public class DressToRepositoryRepository {
+public class DressToPurchaseRepository {
 
 	@Autowired
 	private HelperDressToPurchaseRepository repository;
@@ -38,17 +38,17 @@ public class DressToRepositoryRepository {
 		}
 	}
 
-	public DressToPurchase getDressToPurchaseByPurchase(int purchaseId) throws NotFoundException {
+	public DressToPurchase getDressToPurchaseByPurchase(Purchase purchase) throws NotFoundException {
 		try {
-			return repository.findByPurchase(purchaseId);
+			return repository.findByPurchase(purchase);
 		} catch (Exception e) {
 			throw new NotFoundException();
 		}
 	}
 
-	public DressToPurchase getDressToPurchaseByDress(int dressId) throws NotFoundException {
+	public DressToPurchase getDressToPurchaseByDress(Dress dress) throws NotFoundException {
 		try {
-			return repository.findByDress(dressId);
+			return repository.findByDress(dress);
 		} catch (Exception e) {
 			throw new NotFoundException();
 		}
@@ -93,8 +93,8 @@ public class DressToRepositoryRepository {
 		repository.removeByPurchase(purchase);
 	}
 
-	public void removeDressToPurchaseByDress(Dress dress) {
-		repository.removeByDress(dress);
+	public void removeDressToPurchaseByDress(int purchaseId, int dressId) {
+		repository.deleteById(new DressToPurchaseId(purchaseId, dressId));
 	}
 
 	public void removeDressesToPurchases() {

@@ -1,9 +1,14 @@
 package com.lamadrid.store.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,7 +45,6 @@ public class PurchaseRestController {
 	}
 
 	@PostMapping(value = "/users/{userId}/purchase/{purchaseId}/dress/{dressId}", produces = "application/json;charset=UTF-8")
-
 	public String toBuy(@PathVariable int purchaseId, @PathVariable int dressId, @RequestBody String json)
 
 			throws NotFoundException, InvalidParamException {
@@ -52,5 +56,53 @@ public class PurchaseRestController {
 		return toJson(purchaseDress);
 
 	}
+	
+	@PutMapping(value = "/users/{userId}/purchase/{purchaseId}", produces = "application/json;charset=UTF-8" )
+	public String pay(@PathVariable int purchaseId) throws InvalidParamException, NotFoundException {
+		
+		PurchaseDTO purchase = controller.pay(purchaseId);
+		
+		return toJson(purchase);
+		
+	}
+	
+	@GetMapping(value = "/users/{userId}/purchase/{purchaseId}", produces = "application/json;charset=UTF-8")
+	public String getPurchase(@PathVariable int userId, @PathVariable int purchaseId) throws NotFoundException, InvalidParamException {
+		
+		PurchaseDTO purchase = controller.getPurchase(userId, purchaseId);
+		
+		return toJson(purchase);
+	}
+	
+	@GetMapping(value = "/users/{userId}/purchase", produces = "application/json;charset=UTF-8")
+	public String getAllPurchases(@PathVariable int userId) throws NotFoundException, InvalidParamException {
+		
+		List<PurchaseDTO> purchases = controller.getAllPurchases(userId);
+		
+		return new Gson().toJson(purchases);
+	}
+	
+	@DeleteMapping(value = "/users/{userId}/purchase", produces = "application/json;charset=UTF-8")
+	public void removeAllPurchases(@PathVariable int userId) throws Exception {
+		
+		controller.removePurchases(userId);
+	}
+
+	@DeleteMapping(value = "/users/{userId}/purchase/{purchaseId}", produces = "application/json;charset=UTF-8")
+	public void removePurchase(@PathVariable int userId, @PathVariable int purchaseId)
+	
+			throws NotFoundException, InvalidParamException {
+		
+		controller.removePurchaseOfUser(userId, purchaseId);
+	}
+	
+	@DeleteMapping(value = "/users/{userId}/purchase/{purchaseId}/dress/{dressId}", produces = "application/json;charset=UTF-8")
+	public void removeDressOfPurchase(@PathVariable int dressId)
+	
+			throws NotFoundException, InvalidParamException {
+		
+		controller.removeDressToPurchase(dressId);
+	}
+	
 
 }

@@ -57,7 +57,7 @@ public class PurchaseDTO {
 	}*/
 
 	public String getPurchaseDateToString() {
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format1 = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
 		return format1.format(purchaseDate.getTime());
 
 	}

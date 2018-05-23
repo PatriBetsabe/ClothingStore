@@ -85,6 +85,11 @@ public class Purchase {
 		return new ArrayList<>(dresses);
 	}
 
+	
+	public User getUser() {
+		return user;
+	}
+
 	public void addDress(Dress dress, double quantity) throws NotFoundException {
 		if (dress == null)
 			throw new NotFoundException();
