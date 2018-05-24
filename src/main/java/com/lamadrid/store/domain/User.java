@@ -53,10 +53,10 @@ public class User {
 		Encryptor.checkIfPasswordMatches(password, this.password);
 	}
 
-	public void checkEmailCorrect(String email) throws InvalidParamException {
+	/*public void checkEmailCorrect(String email) throws InvalidParamException {
 		if (!this.email.equals(email))
 			throw new InvalidParamException();
-	}
+	}*/
 
 	public Integer getId() {
 		return id;

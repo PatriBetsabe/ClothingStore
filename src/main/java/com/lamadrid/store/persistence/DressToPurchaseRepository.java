@@ -30,13 +30,21 @@ public class DressToPurchaseRepository {
 		}
 	}
 
-	public DressToPurchase getDressToPurchaseById(DressToPurchaseId id) throws NotFoundException {
+	public DressToPurchase getDressToPurchaseById(int purchaseId, int dressId) throws NotFoundException {
+		try {
+			return repository.findById(new DressToPurchaseId(purchaseId, dressId)).get();
+		} catch (Exception e) {
+			throw new NotFoundException();
+		}
+	}
+	
+	/*public DressToPurchase getDressToPurchaseById(DressToPurchaseId id) throws NotFoundException {
 		try {
 			return repository.findById(id).get();
 		} catch (Exception e) {
 			throw new NotFoundException();
 		}
-	}
+	}*/
 
 	public DressToPurchase getDressToPurchaseByPurchase(Purchase purchase) throws NotFoundException {
 		try {

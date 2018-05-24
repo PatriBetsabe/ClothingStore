@@ -72,6 +72,13 @@ public class Purchase {
 	}
 
 	public double getTotal() {
+	
+		/*double totalPrice = 0;
+		for(DressToPurchase prices : dresses)
+			totalPrice += prices.getSubtotal();*/
+		
+		//this.total=total;
+		
 		return total;
 	}
 

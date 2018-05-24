@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lamadrid.store.application.DressController;
 import com.lamadrid.store.application.dto.DressDTO;
+import com.lamadrid.store.domain.Dress;
 import com.lamadrid.store.utilities.InvalidParamException;
 import com.lamadrid.store.utilities.NotFoundException;
 
@@ -42,12 +43,20 @@ public class DressRestController {
 		return toJson(dress);
 	}
 	
-	@PutMapping(value = "/dresses/{dressId}" , produces = "application/json;charset=UTF-8")
+	@PutMapping(value = "/dress/{dressId}" , produces = "application/json;charset=UTF-8")
 	public String updateDress(@PathVariable int dressId, @RequestBody String jDress) throws NotFoundException, InvalidParamException {
 		
 		DressDTO dressToUpdate = new Gson().fromJson(jDress, DressDTO.class);
 		
 		DressDTO dress = controller.updateDress(dressId, dressToUpdate);
+		
+		return toJson(dress);
+	}
+	
+	@PutMapping(value = "/dresses/{dressId}", produces = "application/json;charset=UTF-8")
+	public String updateStock(@PathVariable int dressId) throws InvalidParamException, NotFoundException {
+		
+		DressDTO dress = controller.getCurrentStock(dressId);
 		
 		return toJson(dress);
 	}

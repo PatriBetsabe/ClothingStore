@@ -31,7 +31,7 @@ public class Dress {
 	public static final int XXL = 6;
 
 	private int size;
-	private int stock;
+	private double stock;
 	private double price_sold;
 	private double price_cost;
 
@@ -43,7 +43,7 @@ public class Dress {
 
 	}
 
-	public Dress(String model, String color, int size, double price_sold, double price_cost, int stock, String imageUrl)
+	public Dress(String model, String color, int size, double price_sold, double price_cost, double stock, String imageUrl)
 			throws InvalidParamException {
 		if (model.equals("") || color.equals("") || price_cost <= 0 || price_sold <= 0 || stock <= 0)
 			throw new InvalidParamException();
@@ -106,11 +106,11 @@ public class Dress {
 			this.imageUrl = imageUrl;
 	}
 
-	public int getStock() {
+	public double getStock() {
 		return stock;
 	}
 
-	public void setStock(int stock) throws InvalidParamException {
+	public void setStock(double stock) throws InvalidParamException {
 		if (stock <= 0)
 			throw new InvalidParamException();
 		this.stock = stock;

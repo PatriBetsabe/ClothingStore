@@ -11,9 +11,9 @@ public class DressDTO {
 	@Expose
 	private String model, color, imageUrl;
 	@Expose
-	private int size,stock;
+	private int size;
 	@Expose
-	private double price_sold;
+	private double price_sold, stock;
 	private double price_cost;
 	
 	public DressDTO(Dress dress) throws NotFoundException {
@@ -52,7 +52,7 @@ public class DressDTO {
 		return size;
 	}
 	
-	public int getStock() {
+	public double getStock() {
 		if(this.stock<=0) return 0;
 		return stock;
 	}

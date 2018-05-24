@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lamadrid.store.application.PurchaseController;
+import com.lamadrid.store.application.dto.DressDTO;
 import com.lamadrid.store.application.dto.DressToPurchaseDTO;
 import com.lamadrid.store.application.dto.PurchaseDTO;
 import com.lamadrid.store.utilities.InvalidParamException;
@@ -60,7 +61,9 @@ public class PurchaseRestController {
 	@PutMapping(value = "/users/{userId}/purchases/{purchaseId}", produces = "application/json;charset=UTF-8" )
 	public String pay(@PathVariable int purchaseId) throws InvalidParamException, NotFoundException {
 		
-		PurchaseDTO purchase = controller.pay(purchaseId);
+		
+		PurchaseDTO purchase = controller.getTotalToPay(purchaseId);
+		purchase=controller.pay(purchaseId);
 		
 		return toJson(purchase);
 		
