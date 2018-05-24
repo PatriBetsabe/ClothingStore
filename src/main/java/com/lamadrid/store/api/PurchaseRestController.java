@@ -33,7 +33,7 @@ public class PurchaseRestController {
 		return gson.toJson(object);
 	}
 
-	@PostMapping(value = "/users/{userId}/purchase", produces = "application/json;charset=UTF-8")
+	@PostMapping(value = "/users/{userId}/purchases", produces = "application/json;charset=UTF-8")
 	public String createNewPurchase(@PathVariable int userId, @RequestBody String jPurchase)
 			throws InvalidParamException, NotFoundException {
 
@@ -44,7 +44,7 @@ public class PurchaseRestController {
 		return toJson(purchase);
 	}
 
-	@PostMapping(value = "/users/{userId}/purchase/{purchaseId}/dress/{dressId}", produces = "application/json;charset=UTF-8")
+	@PostMapping(value = "/users/{userId}/purchases/{purchaseId}/dresses/{dressId}", produces = "application/json;charset=UTF-8")
 	public String toBuy(@PathVariable int purchaseId, @PathVariable int dressId, @RequestBody String json)
 
 			throws NotFoundException, InvalidParamException {
@@ -57,7 +57,7 @@ public class PurchaseRestController {
 
 	}
 	
-	@PutMapping(value = "/users/{userId}/purchase/{purchaseId}", produces = "application/json;charset=UTF-8" )
+	@PutMapping(value = "/users/{userId}/purchases/{purchaseId}", produces = "application/json;charset=UTF-8" )
 	public String pay(@PathVariable int purchaseId) throws InvalidParamException, NotFoundException {
 		
 		PurchaseDTO purchase = controller.pay(purchaseId);
@@ -66,7 +66,7 @@ public class PurchaseRestController {
 		
 	}
 	
-	@GetMapping(value = "/users/{userId}/purchase/{purchaseId}", produces = "application/json;charset=UTF-8")
+	@GetMapping(value = "/users/{userId}/purchases/{purchaseId}", produces = "application/json;charset=UTF-8")
 	public String getPurchase(@PathVariable int userId, @PathVariable int purchaseId) throws NotFoundException, InvalidParamException {
 		
 		PurchaseDTO purchase = controller.getPurchase(userId, purchaseId);
@@ -74,7 +74,7 @@ public class PurchaseRestController {
 		return toJson(purchase);
 	}
 	
-	@GetMapping(value = "/users/{userId}/purchase", produces = "application/json;charset=UTF-8")
+	@GetMapping(value = "/users/{userId}/purchases", produces = "application/json;charset=UTF-8")
 	public String getAllPurchases(@PathVariable int userId) throws NotFoundException, InvalidParamException {
 		
 		List<PurchaseDTO> purchases = controller.getAllPurchases(userId);
@@ -82,13 +82,13 @@ public class PurchaseRestController {
 		return new Gson().toJson(purchases);
 	}
 	
-	@DeleteMapping(value = "/users/{userId}/purchase", produces = "application/json;charset=UTF-8")
+	@DeleteMapping(value = "/users/{userId}/purchases", produces = "application/json;charset=UTF-8")
 	public void removeAllPurchases(@PathVariable int userId) throws Exception {
 		
 		controller.removePurchases(userId);
 	}
 
-	@DeleteMapping(value = "/users/{userId}/purchase/{purchaseId}", produces = "application/json;charset=UTF-8")
+	@DeleteMapping(value = "/users/{userId}/purchases/{purchaseId}", produces = "application/json;charset=UTF-8")
 	public void removePurchase(@PathVariable int userId, @PathVariable int purchaseId)
 	
 			throws NotFoundException, InvalidParamException {
@@ -96,12 +96,12 @@ public class PurchaseRestController {
 		controller.removePurchaseOfUser(userId, purchaseId);
 	}
 	
-	@DeleteMapping(value = "/users/{userId}/purchase/{purchaseId}/dress/{dressId}", produces = "application/json;charset=UTF-8")
-	public void removeDressOfPurchase(@PathVariable int dressId)
+	@DeleteMapping(value = "/users/{userId}/purchases/{purchaseId}/dresses/{dressId}", produces = "application/json;charset=UTF-8")
+	public void removeDressOfPurchase(@PathVariable int dressId, @PathVariable int purchaseId)
 	
 			throws NotFoundException, InvalidParamException {
 		
-		controller.removeDressToPurchase(dressId);
+		controller.removeDressToPurchase(purchaseId, dressId);
 	}
 	
 

@@ -85,15 +85,15 @@ public class DressToPurchaseRepository {
 		return result;
 	}
 
-	public void removeDressToPurchase(DressToPurchaseId id) {
+/*	public void removeDressToPurchase(DressToPurchaseId id) {
 		repository.deleteById(id);
-	}
+	}*/
 
 	public void removeDressToPurchaseByPurchase(Purchase purchase) {
 		repository.removeByPurchase(purchase);
 	}
 
-	public void removeDressToPurchaseByDress(int purchaseId, int dressId) {
+	public void removeDressToPurchaseByIds(int purchaseId, int dressId) {
 		repository.deleteById(new DressToPurchaseId(purchaseId, dressId));
 	}
 

@@ -49,6 +49,9 @@ public class PurchaseController {
 		Dress dress = dressController.getDress(dressId);
 
 		DressToPurchase purchaseDress = new DressToPurchase(purchase, dress,newPurchaseDress.getQuantity());
+		
+		
+		//Spurchase.setTotal(newPurchaseDress.getSubtotal());
 
 		purchaseDressRepository.save(purchaseDress);
 
@@ -56,13 +59,14 @@ public class PurchaseController {
 
 	}
 	
-	public void removeDressToPurchase(int dressId) throws NotFoundException {
+	public void removeDressToPurchase(int purchaseId, int dressId) throws NotFoundException {
 		
-		Dress dress = dressController.getDress(dressId);
-		
-		purchaseDressRepository.removeDressToPurchaseByDress(dress);
+		purchaseDressRepository.removeDressToPurchaseByIds(purchaseId, dressId);
 
 	}
+	
+	/*if(user.getId() != purchase.getUser().getId())
+		throw new InvalidParamException();*/
 	
 	public PurchaseDTO pay(int purchaseId) throws InvalidParamException, NotFoundException {
 		
