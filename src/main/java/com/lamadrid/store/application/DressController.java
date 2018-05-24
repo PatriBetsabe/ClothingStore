@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.lamadrid.store.application.dto.DressDTO;
+import com.lamadrid.store.application.dto.DressToPurchaseDTO;
 import com.lamadrid.store.domain.Dress;
 import com.lamadrid.store.domain.DressToPurchase;
 import com.lamadrid.store.persistence.DressRepository;
@@ -65,38 +66,6 @@ public class DressController {
 		
 	}
 	
-	public DressDTO getCurrentStock(int dressId) throws InvalidParamException, NotFoundException {
-		
-		Dress dress = dressRepository.getDressById(dressId);
-		
-		List<DressToPurchase> stock = purchaseDressRepository.getAllDressesToPurchasesByDress(dress);
-		
-		double stockInit = 0;
-		for(DressToPurchase s : stock)
-			stockInit += s.getQuantity();
-		
-		dress.setStock(dress.getStock()-(stockInit));
-	
-		dressRepository.save(dress);
-		
-		return new DressDTO(dress);
-	}
-	
-	
-	
-	public List<DressDTO> listDresses() throws NotFoundException{
-		List<Dress> dressList = dressRepository.getAllDresses();
-		List<DressDTO> dressDTOList = new ArrayList<>();
-		
-		if(dressList.isEmpty())
-			throw new NotFoundException();
-		
-		for(Dress d : dressList) {
-			dressDTOList.add(new DressDTO(d));
-		}
-		return dressDTOList;
-	}
-	
 	Dress getDress(int dressId) throws NotFoundException {
 		Dress dress = dressRepository.getDressById(dressId);
 		
@@ -110,18 +79,35 @@ public class DressController {
 		return new DressDTO(dress);
 	}
 	
-	/*public PurchaseDTO addDressToPurchase(int dressId, PurchaseDTO newPurchase) throws NotFoundException, InvalidParamException {
+	public DressDTO getCurrentStock(int dressId) throws InvalidParamException, NotFoundException {
 		
 		Dress dress = dressRepository.getDressById(dressId);
-
 		
-		Purchase purchase = new Purchase();
+		List<DressToPurchase> dresses = purchaseDressRepository.getAllDressesToPurchasesByDress(dress);
 		
-		purchaseRepository.save(purchase);
+		double stocksInit = 0;
+		for(DressToPurchase s : dresses)
+			stocksInit += s.getQuantity();
+		
+		dress.setStock(dress.getStock()-(stocksInit));
+	
 		dressRepository.save(dress);
 		
-		return new PurchaseDTO(purchase);
-	}*/
+		return new DressDTO(dress);
+	}
+	
+	public List<DressDTO> listDresses() throws NotFoundException{
+		List<Dress> dressList = dressRepository.getAllDresses();
+		List<DressDTO> dressDTOList = new ArrayList<>();
+		
+		if(dressList.isEmpty())
+			throw new NotFoundException();
+		
+		for(Dress d : dressList) {
+			dressDTOList.add(new DressDTO(d));
+		}
+		return dressDTOList;
+	}
 	
 	public void removeDress(int dressId) {
 
