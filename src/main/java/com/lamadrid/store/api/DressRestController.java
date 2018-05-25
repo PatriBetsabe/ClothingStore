@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lamadrid.store.application.DressController;
 import com.lamadrid.store.application.dto.DressDTO;
-import com.lamadrid.store.domain.Dress;
 import com.lamadrid.store.utilities.InvalidParamException;
 import com.lamadrid.store.utilities.NotFoundException;
 
@@ -59,6 +58,7 @@ public class DressRestController {
 		DressDTO dress = controller.getCurrentStock(dressId);
 		
 		return toJson(dress);
+
 	}
 	
 	@GetMapping(value = "/dresses" , produces = "application/json;charset=UTF-8")

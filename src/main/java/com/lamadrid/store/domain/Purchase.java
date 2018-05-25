@@ -21,11 +21,14 @@ import com.lamadrid.store.utilities.NotFoundException;
 
 @Entity(name = "purchase") 
 public class Purchase {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
+	
 	@Column(name = "purchase_date")
 	private Calendar purchaseDate;
+	
 	private int payment;
 	private double total;
 	
@@ -40,7 +43,7 @@ public class Purchase {
 
 	}
 
-	public Purchase(User user, int payment, double total) throws InvalidParamException {
+	public Purchase(User user) throws InvalidParamException {
 				
 		if(user==null) throw new InvalidParamException();
 		
@@ -48,8 +51,8 @@ public class Purchase {
 		
 		this.user = user;
 		this.purchaseDate = Calendar.getInstance();
-		this.payment = payment;
-		this.total = total;
+		this.payment = getPayment();
+		this.total = getTotal();
 	}
 
 

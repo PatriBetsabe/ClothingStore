@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lamadrid.store.application.PurchaseController;
-import com.lamadrid.store.application.dto.DressDTO;
 import com.lamadrid.store.application.dto.DressToPurchaseDTO;
 import com.lamadrid.store.application.dto.PurchaseDTO;
 import com.lamadrid.store.utilities.InvalidParamException;
@@ -35,12 +34,12 @@ public class PurchaseRestController {
 	}
 
 	@PostMapping(value = "/users/{userId}/purchases", produces = "application/json;charset=UTF-8")
-	public String createNewPurchase(@PathVariable int userId, @RequestBody String jPurchase)
+	public String createNewPurchase(@PathVariable int userId)
 			throws InvalidParamException, NotFoundException {
 
-		PurchaseDTO purchaseDTO = new Gson().fromJson(jPurchase, PurchaseDTO.class);
+		//PurchaseDTO purchaseDTO = new Gson().fromJson(jPurchase, PurchaseDTO.class);
 
-		PurchaseDTO purchase = controller.createPurchase(userId, purchaseDTO);
+		PurchaseDTO purchase = controller.createPurchase(userId);
 
 		return toJson(purchase);
 	}
@@ -63,7 +62,7 @@ public class PurchaseRestController {
 		
 		
 		PurchaseDTO purchase = controller.getTotalToPay(purchaseId);
-		purchase=controller.pay(purchaseId);
+		purchase=controller.toPay(purchaseId);
 		
 		return toJson(purchase);
 		
@@ -104,7 +103,7 @@ public class PurchaseRestController {
 	
 			throws NotFoundException, InvalidParamException {
 		
-		controller.removeDressToPurchase(purchaseId, dressId);
+		controller.deleteShoppingList(purchaseId, dressId);
 	}
 	
 

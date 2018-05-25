@@ -31,8 +31,6 @@ public class UserController {
 
 		User user = userRepository.getUserByEmail(userToLogin.getEmail());
 
-		//user.checkEmailCorrect(userToLogin.getEmail());
-
 		user.checkPasswordIsCorrect(userToLogin.getPassword());
 
 		return new UserDTO(user);

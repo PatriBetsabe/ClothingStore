@@ -22,41 +22,41 @@ public class User {
 	}
 
 	public User(String name, String email, String password) throws InvalidParamException {
+		
 		checkValidName(name);
 		checkValidPassword(password);
 		checkValidEmail(email);
-		
-		if(!email.contains("@"))
+
+		if (!email.contains("@"))
 			throw new InvalidParamException();
-		
+
 		this.name = name;
 		this.email = email;
 		this.password = Encryptor.encryptPassword(password);
 	}
-	
+
 	private void checkValidName(String name) throws InvalidParamException {
+		
 		if (name == null || name.equals(""))
 			throw new InvalidParamException();
 	}
 
-	private void checkValidPassword(String password) throws InvalidParamException {
+	private void checkValidPassword(String password) throws InvalidParamException { 
+		
 		if (password == null || password.length() < 7)
 			throw new InvalidParamException();
 	}
-	
+
 	private void checkValidEmail(String email) throws InvalidParamException {
-		if(email== null || email.equals(""))
+		
+		if (email == null || email.equals(""))
 			throw new InvalidParamException();
-	}
-	
-	public void checkPasswordIsCorrect(String password) throws InvalidParamException {
-		Encryptor.checkIfPasswordMatches(password, this.password);
 	}
 
-	/*public void checkEmailCorrect(String email) throws InvalidParamException {
-		if (!this.email.equals(email))
-			throw new InvalidParamException();
-	}*/
+	public void checkPasswordIsCorrect(String password) throws InvalidParamException {
+		
+		Encryptor.checkIfPasswordMatches(password, this.password);
+	}
 
 	public Integer getId() {
 		return id;
@@ -67,6 +67,7 @@ public class User {
 	}
 
 	public void setName(String name) throws InvalidParamException {
+		
 		checkValidName(name);
 		this.name = name;
 	}
@@ -75,12 +76,13 @@ public class User {
 		return email;
 	}
 
-	public void setEmail(String email) throws InvalidParamException{	
+	public void setEmail(String email) throws InvalidParamException {
+		
 		checkValidEmail(email);
-		
-		if(!email.contains("@"))
-				throw new InvalidParamException();
-		
+
+		if (!email.contains("@"))
+			throw new InvalidParamException();
+
 		this.email = email;
 	}
 
@@ -89,6 +91,7 @@ public class User {
 	}
 
 	public void setPassword(String password) throws InvalidParamException {
+		
 		checkValidPassword(password);
 		this.password = password;
 	}
