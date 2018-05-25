@@ -26,7 +26,8 @@ public class DressToPurchase {
 	private double price_unit;
 	private double quantity;
 	private double subtotal;
- 
+	private boolean paid;
+	
 	private DressToPurchase() {}
  
 	public DressToPurchase(Purchase purchase, Dress dress, double quantity) {
@@ -97,6 +98,15 @@ public class DressToPurchase {
 	@Override
 	public int hashCode() {
     	return Objects.hash(purchase, dress);
+	}
+
+	public double updateStock() {
+		if(!paid) {
+			paid=true;
+			return quantity;
+		}
+		return 0;
+		
 	}
 
 }

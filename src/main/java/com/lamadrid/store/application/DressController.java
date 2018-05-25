@@ -73,7 +73,7 @@ public class DressController {
 		
 		double stockInit = 0;
 		for(DressToPurchase s : stock)
-			stockInit += s.getQuantity();
+			stockInit += s.updateStock();
 		
 		dress.setStock(dress.getStock()-(stockInit));
 	

@@ -129,6 +129,7 @@ public class PurchaseController {
 	public void removePurchases(int userId) throws NotFoundException {
 		User user = userController.getUser(userId);
 		purchaseRepository.removePurchases(user);
+		//purchaseDressRepository.removeDressToPurchaseByIds(purchaseId, dressId);
 	} 
 	
 	public void removePurchaseOfUser(int userId, int purchaseId) throws NotFoundException, InvalidParamException {
