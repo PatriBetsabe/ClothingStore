@@ -37,14 +37,6 @@ public class DressToPurchaseRepository {
 			throw new NotFoundException();
 		}
 	}
-	
-	/*public DressToPurchase getDressToPurchaseById(DressToPurchaseId id) throws NotFoundException {
-		try {
-			return repository.findById(id).get();
-		} catch (Exception e) {
-			throw new NotFoundException();
-		}
-	}*/
 
 	public DressToPurchase getDressToPurchaseByPurchase(Purchase purchase) throws NotFoundException {
 		try {
@@ -92,10 +84,6 @@ public class DressToPurchaseRepository {
 
 		return result;
 	}
-
-/*	public void removeDressToPurchase(DressToPurchaseId id) {
-		repository.deleteById(id);
-	}*/
 
 	public void removeDressToPurchaseByPurchase(Purchase purchase) {
 		repository.removeByPurchase(purchase);

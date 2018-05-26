@@ -2,11 +2,16 @@ package com.lamadrid.store.domain;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+
+import org.hibernate.annotations.Type;
+
+import com.lamadrid.store.utilities.InvalidParamException;
 
 @Entity(name = "dress_to_purchase")
 public class DressToPurchase {
@@ -26,23 +31,46 @@ public class DressToPurchase {
 	private double price_unit;
 	private double quantity;
 	private double subtotal;
-	private boolean paid;
+	@Column (name= "is_paid_and_updated",nullable = false)
+	@Type (type = "org.hibernate.type.NumericBooleanType")
+	private boolean isPaidAndUpdated;
 	
 	private DressToPurchase() {}
  
-	public DressToPurchase(Purchase purchase, Dress dress, double quantity) {
+	public DressToPurchase(Purchase purchase, Dress dress, double quantity) throws InvalidParamException {
+		
+		if(purchase == null) throw new InvalidParamException();
+		
+		if(dress == null) throw new InvalidParamException();
+		
+		if(quantity<0) throw new InvalidParamException();
+		
     	this.purchase = purchase;
     	this.dress = dress;
     	this.id = new DressToPurchaseId(purchase.getId(), dress.getId());
     	this.price_unit = dress.getPrice_sold();
     	this.quantity = quantity;
     	this.subtotal = dress.getPrice_sold()*quantity;
+    	//this.isPaidAndUpdated = getIsPaidAndUpdated();
+    	this.isPaidAndUpdated=false;
+    	
 	}
- 
+
+
+	/*public int getIsPaidAndUpdated() {
+		return isPaidAndUpdated;
+	}*/
+	
+	
+
 	public DressToPurchaseId getId() {
 		return id;
 	}
 	
+	public boolean isPaidAndUpdated() {
+		return isPaidAndUpdated;
+	}
+
 	public double getPrice_unit() {
 		return price_unit;
 	}
@@ -100,9 +128,18 @@ public class DressToPurchase {
     	return Objects.hash(purchase, dress);
 	}
 
+	/*public double updateStock() {
+		if(isPaidAndUpdated==0) {
+			isPaidAndUpdated=1;
+			return quantity;
+		}
+		return 0;
+		
+	}*/
+	
 	public double updateStock() {
-		if(!paid) {
-			paid=true;
+		if(!isPaidAndUpdated) {
+			isPaidAndUpdated=true;
 			return quantity;
 		}
 		return 0;

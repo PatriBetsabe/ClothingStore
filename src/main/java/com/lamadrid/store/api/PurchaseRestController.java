@@ -51,13 +51,13 @@ public class PurchaseRestController {
 
 		DressToPurchaseDTO purchaseDressDTO = new Gson().fromJson(json, DressToPurchaseDTO.class);
 
-		DressToPurchaseDTO purchaseDress = controller.addDressToPurchase(purchaseId, dressId, purchaseDressDTO);
+		DressToPurchaseDTO purchaseDress = controller.addToCart(purchaseId, dressId, purchaseDressDTO);
 
 		return toJson(purchaseDress);
 
 	}
 	
-	@PutMapping(value = "/users/{userId}/purchases/{purchaseId}", produces = "application/json;charset=UTF-8" )
+	@PostMapping(value = "/users/{userId}/purchases/{purchaseId}", produces = "application/json;charset=UTF-8" )
 	public String pay(@PathVariable int purchaseId) throws InvalidParamException, NotFoundException {
 		
 		
@@ -95,7 +95,7 @@ public class PurchaseRestController {
 	
 			throws NotFoundException, InvalidParamException {
 		
-		controller.removePurchaseOfUser(userId, purchaseId);
+		controller.cancelPurchaseOfUser(userId, purchaseId);
 	}
 	
 	@DeleteMapping(value = "/users/{userId}/purchases/{purchaseId}/dresses/{dressId}", produces = "application/json;charset=UTF-8")
@@ -103,7 +103,7 @@ public class PurchaseRestController {
 	
 			throws NotFoundException, InvalidParamException {
 		
-		controller.deleteShoppingList(purchaseId, dressId);
+		controller.deletePurchaseLine(purchaseId, dressId);
 	}
 	
 

@@ -111,7 +111,7 @@ public class Dress {
 	}
 
 	public void setStock(double stock) throws InvalidParamException {
-		if (stock <= 0)
+		if (stock < 0)
 			throw new InvalidParamException();
 		this.stock = stock;
 	}

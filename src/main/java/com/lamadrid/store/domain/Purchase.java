@@ -100,7 +100,7 @@ public class Purchase {
 		return user;
 	}
 
-	public void addDress(Dress dress, double quantity) throws NotFoundException {
+	public void addDress(Dress dress, double quantity) throws NotFoundException, InvalidParamException {
 		if (dress == null)
 			throw new NotFoundException();
 		DressToPurchase purchaseDress = new DressToPurchase(this, dress, quantity);

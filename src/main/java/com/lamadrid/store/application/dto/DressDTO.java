@@ -53,7 +53,7 @@ public class DressDTO {
 	}
 	
 	public double getStock() {
-		if(this.stock<=0) return 0;
+		if(this.stock<0) return 0;
 		return stock;
 	}
 

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.lamadrid.store.application.dto.DressDTO;
-import com.lamadrid.store.application.dto.DressToPurchaseDTO;
 import com.lamadrid.store.domain.Dress;
 import com.lamadrid.store.domain.DressToPurchase;
 import com.lamadrid.store.persistence.DressRepository;
@@ -72,6 +71,12 @@ public class DressController {
 		return dress;
 	}
 	
+	List<Dress> getAllDresses() {
+		List<Dress> dresses = dressRepository.getAllDresses();
+		
+		return dresses;
+	}
+	
 	public DressDTO getDressDTO(int dressId) throws NotFoundException {
 		
 		Dress dress = dressRepository.getDressById(dressId);
@@ -80,28 +85,22 @@ public class DressController {
 	}
 	
 	public DressDTO getCurrentStock(int dressId) throws InvalidParamException, NotFoundException {
-		
+
 		Dress dress = dressRepository.getDressById(dressId);
 		
-		List<DressToPurchase> dresses = purchaseDressRepository.getAllDressesToPurchasesByDress(dress);
+		List<DressToPurchase> dressesToBuy = purchaseDressRepository.getAllDressesToPurchasesByDress(dress);
+
+		double stockForUpdating = 0;
+		for (DressToPurchase s : dressesToBuy)
+			stockForUpdating += s.updateStock();
 		
-<<<<<<< HEAD
-		double stockInit = 0;
-		for(DressToPurchase s : stock)
-			stockInit += s.updateStock();
-=======
-		double stocksInit = 0;
-		for(DressToPurchase s : dresses)
-			stocksInit += s.getQuantity();
->>>>>>> 9baef36a846a62ce54474338e605c15a1213a501
-		
-		dress.setStock(dress.getStock()-(stocksInit));
-	
+		dress.setStock(dress.getStock() - (stockForUpdating));
+
 		dressRepository.save(dress);
-		
 		return new DressDTO(dress);
+
 	}
-	
+
 	public List<DressDTO> listDresses() throws NotFoundException{
 		List<Dress> dressList = dressRepository.getAllDresses();
 		List<DressDTO> dressDTOList = new ArrayList<>();
