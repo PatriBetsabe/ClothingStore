@@ -22,7 +22,7 @@ import com.lamadrid.store.utilities.NotFoundException;
 @RestController
 @CrossOrigin
 public class PurchaseRestController {
-	
+
 	@Autowired
 	private PurchaseController controller;
 
@@ -33,8 +33,7 @@ public class PurchaseRestController {
 	}
 
 	@PostMapping(value = "/users/{userId}/purchases", produces = "application/json;charset=UTF-8")
-	public String createNewPurchase(@PathVariable int userId)
-			throws InvalidParamException, NotFoundException {
+	public String createNewPurchase(@PathVariable int userId) throws InvalidParamException, NotFoundException {
 
 		PurchaseDTO purchase = controller.createPurchase(userId);
 
@@ -42,66 +41,62 @@ public class PurchaseRestController {
 	}
 
 	@PostMapping(value = "/users/{userId}/purchases/{purchaseId}/dresses/{dressId}", produces = "application/json;charset=UTF-8")
-	public String toBuy(@PathVariable int purchaseId, @PathVariable int dressId, @RequestBody String json)
-
+	public String addToCart(@PathVariable int purchaseId, @PathVariable int dressId, @RequestBody String json)
 			throws NotFoundException, InvalidParamException {
 
 		DressToPurchaseDTO purchaseDressDTO = new Gson().fromJson(json, DressToPurchaseDTO.class);
-
 		DressToPurchaseDTO purchaseDress = controller.addToCart(purchaseId, dressId, purchaseDressDTO);
 
 		return toJson(purchaseDress);
 
 	}
-	
-	@PostMapping(value = "/users/{userId}/purchases/{purchaseId}", produces = "application/json;charset=UTF-8" )
-	public String pay(@PathVariable int userId, @PathVariable int purchaseId) throws InvalidParamException, NotFoundException {
-		
-		
-		PurchaseDTO purchase = controller.getTotalToPay(purchaseId);
-		purchase=controller.toPay(userId, purchaseId);
-		
+
+	@PostMapping(value = "/users/{userId}/purchases/{purchaseId}", produces = "application/json;charset=UTF-8")
+	public String toPay(@PathVariable int userId, @PathVariable int purchaseId)
+			throws InvalidParamException, NotFoundException {
+
+		PurchaseDTO purchase = controller.calculateTotalToPay(purchaseId);
+		purchase = controller.toPay(userId, purchaseId);
+
 		return toJson(purchase);
-		
+
 	}
-	
+
 	@GetMapping(value = "/users/{userId}/purchases/{purchaseId}", produces = "application/json;charset=UTF-8")
-	public String getPurchase(@PathVariable int userId, @PathVariable int purchaseId) throws NotFoundException, InvalidParamException {
-		
+	public String getPurchase(@PathVariable int userId, @PathVariable int purchaseId)
+			throws NotFoundException, InvalidParamException {
+
 		PurchaseDTO purchase = controller.getPurchase(userId, purchaseId);
-		
+
 		return toJson(purchase);
 	}
-	
+
 	@GetMapping(value = "/users/{userId}/purchases", produces = "application/json;charset=UTF-8")
 	public String getAllPurchases(@PathVariable int userId) throws NotFoundException, InvalidParamException {
-		
+
 		List<PurchaseDTO> purchases = controller.getAllPurchases(userId);
-		
+
 		return new Gson().toJson(purchases);
 	}
-	
+
 	@DeleteMapping(value = "/users/{userId}/purchases", produces = "application/json;charset=UTF-8")
 	public void removeAllPurchases(@PathVariable int userId) throws Exception {
-		
+
 		controller.removePurchases(userId);
 	}
 
 	@DeleteMapping(value = "/users/{userId}/purchases/{purchaseId}", produces = "application/json;charset=UTF-8")
 	public void removePurchase(@PathVariable int userId, @PathVariable int purchaseId)
-	
 			throws NotFoundException, InvalidParamException {
 		
 		controller.cancelPurchaseOfUser(userId, purchaseId);
 	}
-	
+
 	@DeleteMapping(value = "/users/{userId}/purchases/{purchaseId}/dresses/{dressId}", produces = "application/json;charset=UTF-8")
 	public void removeDressOfPurchase(@PathVariable int dressId, @PathVariable int purchaseId)
-	
 			throws NotFoundException, InvalidParamException {
-		
+
 		controller.deletePurchaseLine(purchaseId, dressId);
 	}
-	
 
 }

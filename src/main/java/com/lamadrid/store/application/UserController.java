@@ -19,20 +19,14 @@ public class UserController {
 	private UserRepository userRepository;
 
 	public UserDTO register(UserDTO userDTO) throws NotFoundException, InvalidParamException {
-
-		User user = new User(userDTO.getName(), userDTO.getEmail(), userDTO.getPassword());
-
+		User user = new User(userDTO);
 		userRepository.save(user);
-
 		return new UserDTO(user);
 	}
 
 	public UserDTO login(UserDTO userToLogin) throws InvalidParamException, NotFoundException {
-
 		User user = userRepository.getUserByEmail(userToLogin.getEmail());
-
 		user.checkPasswordIsCorrect(userToLogin.getPassword());
-
 		return new UserDTO(user);
 	}
 
@@ -57,9 +51,7 @@ public class UserController {
 	}
 
 	public UserDTO getUserDTO(int userId) throws NotFoundException {
-
 		User user = userRepository.getUserById(userId);
-
 		return new UserDTO(user);
 	}
 
@@ -74,18 +66,14 @@ public class UserController {
 			user.setName(userToUpdate.getName());
 
 		userRepository.save(user);
-
 		return new UserDTO(user);
 	}
 
 	public void removeUser(int userId) {
-
 		userRepository.removeUser(userId);
-		
 	}
 
 	public void removeUsers() {
-
 		userRepository.removeUsers();
 	}
 

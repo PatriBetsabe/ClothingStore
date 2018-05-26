@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.lamadrid.store.application.dto.DressDTO;
 import com.lamadrid.store.application.dto.DressToPurchaseDTO;
 import com.lamadrid.store.application.dto.PurchaseDTO;
 import com.lamadrid.store.domain.Dress;
@@ -33,11 +32,8 @@ public class PurchaseController {
 	public PurchaseDTO createPurchase(int userId) throws NotFoundException, InvalidParamException {
 
 		User user = userController.getUser(userId);
-
 		Purchase purchase = new Purchase(user);
-
 		purchaseRepository.save(purchase);
-
 		return new PurchaseDTO(purchase);
 	}
 
@@ -45,7 +41,6 @@ public class PurchaseController {
 			throws NotFoundException, InvalidParamException {
 
 		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
-
 		Dress dress = dressController.getDress(dressId);
 
 		if (purchase.PaymentIsMade())
@@ -62,7 +57,7 @@ public class PurchaseController {
 
 	}
 
-	public PurchaseDTO getTotalToPay(int purchaseId) throws InvalidParamException, NotFoundException {
+	public PurchaseDTO calculateTotalToPay(int purchaseId) throws InvalidParamException, NotFoundException {
 
 		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
 
@@ -73,24 +68,20 @@ public class PurchaseController {
 			totalPrice += prices.getSubtotal();
 
 		purchase.setTotal(totalPrice);
-
 		purchaseRepository.save(purchase);
-
 		return new PurchaseDTO(purchase);
 
 	}
 
 	public PurchaseDTO toPay(int userId, int purchaseId) throws InvalidParamException, NotFoundException {
-		
-	/*la compra tiene que ser del ususario*/
-		
+
 		User user = userController.getUser(userId);
 		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
-		
+
 		if (user.getId() != purchase.getUser().getId())
-			throw new InvalidParamException();
-		
-		if(purchase.PaymentIsMade())
+			throw new InvalidParamException("The purchase does not belong to the user indicated by parameter");
+
+		if (purchase.PaymentIsMade())
 			throw new InvalidParamException("The purchase is already paid");
 
 		purchase.setPaymentIsMade(true);
@@ -98,82 +89,19 @@ public class PurchaseController {
 		purchaseRepository.save(purchase);
 
 		return new PurchaseDTO(purchase);
-
 	}
-
-/*	public PurchaseDTO getCurrentStock(int purchaseId) throws InvalidParamException, NotFoundException {
-
-		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
-		List<Dress> dresses = dressController.getAllDresses();
-
-		List<DressToPurchase> dressesToBuy = purchaseDressRepository.getAllDressToPurchases();
-
-		double stockForUpdating = 0;
-		for (DressToPurchase s : dressesToBuy)
-			stockForUpdating += s.updateStock();
-
-		for (Dress d : dresses)
-			d.setStock(d.getStock() - (stockForUpdating));
-
-		purchaseRepository.save(purchase);
-
-		return new PurchaseDTO(purchase);
-
-	}*/
-	
-	/*public DressDTO getCurrentStock(int dressId) throws InvalidParamException, NotFoundException {
-
-		Dress dress = dressController.getDress(dressId);
-		List<Dress> dresses = dressController.getAllDresses();
-		
-		List<DressToPurchase> dressesToBuy = purchaseDressRepository.getAllDressesToPurchasesByDress(dress);
-
-		List<DressToPurchase> dressesToBuy = purchaseDressRepository.getAllDressToPurchases();
-
-		double stockForUpdating = 0;
-		for (DressToPurchase s : dressesToBuy)
-			stockForUpdating += s.updateStock();
-
-		for (Dress d : dresses)
-			dress.setStock(dress.getStock() - (stockForUpdating));
-
-		dressRepository.save(dress);
-		return new DressDTO(dress);
-
-	}*/
-	
-	/*public DressDTO getCurrentStock(int dressId) throws InvalidParamException, NotFoundException {
-	Dress dress = dressRepository.getDressById(dressId);
-	List<Dress> dresses = dressRepository.getAllDresses();
-	List<DressToPurchase> dressesToBuy = purchaseDressRepository.getAllDressesToPurchasesByDress(dress);
-	
-	double stockForUpdating = 0;
-	for(DressToPurchase s : dressesToBuy)
-		stockForUpdating += s.updateStock();
-
-	double stocksInit = 0;
-	for(DressToPurchase s : dresses)
-		stocksInit += s.getQuantity();
-	
-	dress.setStock(dress.getStock()-(stockForUpdating));
-	dressRepository.save(dress);
-	return new DressDTO(dress);
-}*/
 
 	public PurchaseDTO getPurchase(int userId, int purchaseId) throws NotFoundException, InvalidParamException {
 		User user = userController.getUser(userId);
-
 		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
 
 		if (user.getId() != purchase.getUser().getId())
-			throw new InvalidParamException();
+			throw new InvalidParamException("The purchase does not belong to the user indicated by parameter");
 
 		return new PurchaseDTO(purchase);
-
 	}
 
 	public List<PurchaseDTO> getAllPurchases(int userId) throws NotFoundException, InvalidParamException {
-
 		User user = userController.getUser(userId);
 
 		if (user.getId() != userId)
@@ -189,25 +117,15 @@ public class PurchaseController {
 	}
 
 	public void deletePurchaseLine(int purchaseId, int dressId) throws NotFoundException, InvalidParamException {
-
 		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
 
 		if (purchase.PaymentIsMade())
 			throw new InvalidParamException("You can not retract a purchase that is already paid!!");
 
 		purchaseDressRepository.removeDressToPurchaseByIds(purchaseId, dressId);
-
-	}
-
-	public void removePurchases(int userId) throws NotFoundException {
-
-		User user = userController.getUser(userId);
-		purchaseRepository.removePurchases(user);
-
 	}
 
 	public void cancelPurchaseOfUser(int userId, int purchaseId) throws NotFoundException, InvalidParamException {
-
 		User user = userController.getUser(userId);
 		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
 
@@ -218,7 +136,11 @@ public class PurchaseController {
 			throw new InvalidParamException();
 
 		purchaseRepository.removePurchase(purchaseId);
-
+	}
+	
+	public void removePurchases(int userId) throws NotFoundException {
+		User user = userController.getUser(userId);
+		purchaseRepository.removePurchases(user);
 	}
 
 }

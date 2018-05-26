@@ -27,10 +27,10 @@ public class DressToPurchase {
 	@MapsId("dress_id")
 	private Dress dress;
  
-
 	private double price_unit;
 	private double quantity;
 	private double subtotal;
+	
 	@Column (name= "is_paid_and_updated",nullable = false)
 	@Type (type = "org.hibernate.type.NumericBooleanType")
 	private boolean isPaidAndUpdated;
@@ -51,17 +51,8 @@ public class DressToPurchase {
     	this.price_unit = dress.getPrice_sold();
     	this.quantity = quantity;
     	this.subtotal = dress.getPrice_sold()*quantity;
-    	//this.isPaidAndUpdated = getIsPaidAndUpdated();
     	this.isPaidAndUpdated=false;
-    	
-	}
-
-
-	/*public int getIsPaidAndUpdated() {
-		return isPaidAndUpdated;
-	}*/
-	
-	
+ 	}
 
 	public DressToPurchaseId getId() {
 		return id;
@@ -74,25 +65,13 @@ public class DressToPurchase {
 	public double getPrice_unit() {
 		return price_unit;
 	}
-	
-	public void setPrice_unit(double price_unit) {
-		this.price_unit = price_unit;
-	}
-	
+
 	public double getQuantity() {
 		return quantity;
-	}
-	
-	public void setQuantity(double quantity) {
-		this.quantity = quantity;
 	}
 
 	public double getSubtotal() {
 		return subtotal;
-	}
-
-	public void setSubtotal(double subtotal) {
-		this.subtotal = subtotal;
 	}
 
 	public Purchase getPurchase() {
@@ -111,6 +90,16 @@ public class DressToPurchase {
 		this.dress = dress;
 	}
 	
+	public double updateStock() {
+		if(!isPaidAndUpdated) {
+			isPaidAndUpdated=true;
+			return quantity;
+		}
+		return 0;
+		
+	}
+
+	
 	@Override
 	public boolean equals(Object o) {
     	if (this == o) return true;
@@ -128,22 +117,5 @@ public class DressToPurchase {
     	return Objects.hash(purchase, dress);
 	}
 
-	/*public double updateStock() {
-		if(isPaidAndUpdated==0) {
-			isPaidAndUpdated=1;
-			return quantity;
-		}
-		return 0;
-		
-	}*/
-	
-	public double updateStock() {
-		if(!isPaidAndUpdated) {
-			isPaidAndUpdated=true;
-			return quantity;
-		}
-		return 0;
-		
-	}
 
 }

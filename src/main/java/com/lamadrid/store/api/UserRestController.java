@@ -80,12 +80,11 @@ public class UserRestController {
 	
 	@DeleteMapping(value = "/users" , produces = "application/json;charset=UTF-8")
 	public void removeAllUsers() {
-		
 		controller.removeUsers();
 	}
 	
 	@DeleteMapping(value = "/users/{userId}" , produces = "application/json;charset=UTF-8")
-	public void removeDress(@PathVariable int userId) {
+	public void removeUser(@PathVariable int userId) {
 		
 		controller.removeUser(userId);
 		

@@ -36,7 +36,6 @@ public class DressRestController {
 	public String createNewDress(@RequestBody String jDress) throws InvalidParamException, NotFoundException {
 		
 		DressDTO newDress = new Gson().fromJson(jDress, DressDTO.class);
-		
 		DressDTO dress = controller.createDress(newDress);
 		
 		return toJson(dress);
@@ -46,7 +45,6 @@ public class DressRestController {
 	public String updateDress(@PathVariable int dressId, @RequestBody String jDress) throws NotFoundException, InvalidParamException {
 		
 		DressDTO dressToUpdate = new Gson().fromJson(jDress, DressDTO.class);
-		
 		DressDTO dress = controller.updateDress(dressId, dressToUpdate);
 		
 		return toJson(dress);

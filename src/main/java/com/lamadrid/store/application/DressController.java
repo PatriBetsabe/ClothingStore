@@ -23,12 +23,8 @@ public class DressController {
 	private DressToPurchaseRepository purchaseDressRepository;
 
 	public DressDTO createDress(DressDTO dressDTO) throws InvalidParamException, NotFoundException{
-
-		Dress dress = new Dress(dressDTO.getModel(), dressDTO.getColor(), dressDTO.getSize(),
-				dressDTO.getPrice_sold(),dressDTO.getPrice_cost(), dressDTO.getStock(), dressDTO.getImageUrl());
-		
+		Dress dress = new Dress(dressDTO);
 		dressRepository.save(dress);
-		
 		return new DressDTO(dress);
 		
 	}
@@ -107,12 +103,10 @@ public class DressController {
 	}
 	
 	public void removeDress(int dressId) {
-
 		dressRepository.removeDress(dressId);
 	}
 	
 	public void removeDresses() {
-		
 		dressRepository.removeDresses();
 	}
 	

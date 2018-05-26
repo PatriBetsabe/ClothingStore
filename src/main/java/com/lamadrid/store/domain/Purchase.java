@@ -3,6 +3,7 @@ package com.lamadrid.store.domain;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -18,6 +19,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Type;
 
 import com.lamadrid.store.utilities.InvalidParamException;
+import com.lamadrid.store.utilities.NotFoundException;
 
 @Entity(name = "purchase") 
 public class Purchase {
@@ -76,13 +78,6 @@ public class Purchase {
 		this.paymentIsMade = paymentIsMade;
 	}
 
-	/*public boolean isPayment(boolean paymentMade) throws InvalidParamException {
-		if (!paymentMade) {
-			paymentMade=true;
-		}
-		return false;
-	}*/
-
 	public double getTotal() {
 		return total;
 	}
@@ -102,7 +97,7 @@ public class Purchase {
 		return user;
 	}
 
-	/*public void addDress(Dress dress, double quantity) throws NotFoundException, InvalidParamException {
+	public void addDress(Dress dress, double quantity) throws NotFoundException, InvalidParamException {
 		if (dress == null)
 			throw new NotFoundException();
 		DressToPurchase purchaseDress = new DressToPurchase(this, dress, quantity);
@@ -125,7 +120,7 @@ public class Purchase {
             	purchaseDress.setDress(null);
         	}
     	}
-	}*/
+	}
  
 	
 }
