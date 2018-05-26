@@ -15,7 +15,7 @@ public class PurchaseDTO {
 	@Expose
 	private Date purchaseDate;
 	@Expose
-	private int payment;
+	private boolean paymentIsMade;
 	@Expose
 	private double total;
 	/*@Expose
@@ -25,7 +25,7 @@ public class PurchaseDTO {
 		if(purchase==null) throw new NotFoundException();
 		this.id=purchase.getId();
 		this.purchaseDate=purchase.getPurchaseDate();
-		this.payment=purchase.getPayment();
+		this.paymentIsMade=purchase.PaymentIsMade();
 		this.total=purchase.getTotal();
 		//initListDressesDTO(purchase);
 	}
@@ -42,11 +42,12 @@ public class PurchaseDTO {
 		return id;
 	}
 
-	public int getPayment() {
-		if(this.payment<0) return 0;
-		return payment;
-	}
 	
+	
+	public boolean PaymentIsMade() {
+		return paymentIsMade;
+	}
+
 	public double getTotal() {
 		if(this.total<0) return 0;
 		return total;

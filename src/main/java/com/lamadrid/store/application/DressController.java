@@ -61,20 +61,12 @@ public class DressController {
 		dressRepository.save(dress);
 		
 		return new DressDTO(dress);
-
-		
 	}
 	
 	Dress getDress(int dressId) throws NotFoundException {
 		Dress dress = dressRepository.getDressById(dressId);
 		
 		return dress;
-	}
-	
-	List<Dress> getAllDresses() {
-		List<Dress> dresses = dressRepository.getAllDresses();
-		
-		return dresses;
 	}
 	
 	public DressDTO getDressDTO(int dressId) throws NotFoundException {
@@ -84,7 +76,7 @@ public class DressController {
 		return new DressDTO(dress);
 	}
 	
-	public DressDTO getCurrentStock(int dressId) throws InvalidParamException, NotFoundException {
+	public DressDTO getCurrentStockAndUpdateIt(int dressId) throws InvalidParamException, NotFoundException {
 
 		Dress dress = dressRepository.getDressById(dressId);
 		

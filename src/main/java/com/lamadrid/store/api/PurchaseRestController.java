@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,8 +36,6 @@ public class PurchaseRestController {
 	public String createNewPurchase(@PathVariable int userId)
 			throws InvalidParamException, NotFoundException {
 
-		//PurchaseDTO purchaseDTO = new Gson().fromJson(jPurchase, PurchaseDTO.class);
-
 		PurchaseDTO purchase = controller.createPurchase(userId);
 
 		return toJson(purchase);
@@ -58,11 +55,11 @@ public class PurchaseRestController {
 	}
 	
 	@PostMapping(value = "/users/{userId}/purchases/{purchaseId}", produces = "application/json;charset=UTF-8" )
-	public String pay(@PathVariable int purchaseId) throws InvalidParamException, NotFoundException {
+	public String pay(@PathVariable int userId, @PathVariable int purchaseId) throws InvalidParamException, NotFoundException {
 		
 		
 		PurchaseDTO purchase = controller.getTotalToPay(purchaseId);
-		purchase=controller.toPay(purchaseId);
+		purchase=controller.toPay(userId, purchaseId);
 		
 		return toJson(purchase);
 		

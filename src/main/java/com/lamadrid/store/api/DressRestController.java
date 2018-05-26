@@ -53,9 +53,9 @@ public class DressRestController {
 	}
 	
 	@PutMapping(value = "/dresses/{dressId}", produces = "application/json;charset=UTF-8")
-	public String updateStock(@PathVariable int dressId) throws InvalidParamException, NotFoundException {
+	public String updateToStock(@PathVariable int dressId) throws InvalidParamException, NotFoundException {
 		
-		DressDTO dress = controller.getCurrentStock(dressId);
+		DressDTO dress = controller.getCurrentStockAndUpdateIt(dressId);
 		
 		return toJson(dress);
 

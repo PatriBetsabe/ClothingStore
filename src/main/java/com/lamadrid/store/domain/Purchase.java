@@ -3,7 +3,6 @@ package com.lamadrid.store.domain;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,8 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Type;
+
 import com.lamadrid.store.utilities.InvalidParamException;
-import com.lamadrid.store.utilities.NotFoundException;
 
 @Entity(name = "purchase") 
 public class Purchase {
@@ -29,7 +29,10 @@ public class Purchase {
 	@Column(name = "purchase_date")
 	private Calendar purchaseDate;
 	
-	private int payment;
+	@Column (name= "payment_is_made",nullable = false)
+	@Type (type = "org.hibernate.type.NumericBooleanType")
+	private boolean paymentIsMade;
+	
 	private double total;
 	
 	@ManyToOne(targetEntity = User.class)
@@ -47,11 +50,11 @@ public class Purchase {
 				
 		if(user==null) throw new InvalidParamException();
 		
-		if(payment <0 || total <0) throw new InvalidParamException();
+		if(total <0) throw new InvalidParamException();
 		
 		this.user = user;
 		this.purchaseDate = Calendar.getInstance();
-		this.payment = getPayment();
+		this.paymentIsMade = false;
 		this.total = getTotal();
 	}
 
@@ -64,24 +67,23 @@ public class Purchase {
 		return id;
 	}
 	
-	public int getPayment() {
-		return payment;
+	public boolean PaymentIsMade() {
+		return paymentIsMade;
 	}
 	
-	public void setPayment(int payment) throws InvalidParamException {
-		if (payment <= 0)
-			throw new InvalidParamException();
-		this.payment = payment;
+	
+	public void setPaymentIsMade(boolean paymentIsMade) {
+		this.paymentIsMade = paymentIsMade;
 	}
 
+	/*public boolean isPayment(boolean paymentMade) throws InvalidParamException {
+		if (!paymentMade) {
+			paymentMade=true;
+		}
+		return false;
+	}*/
+
 	public double getTotal() {
-	
-		/*double totalPrice = 0;
-		for(DressToPurchase prices : dresses)
-			totalPrice += prices.getSubtotal();*/
-		
-		//this.total=total;
-		
 		return total;
 	}
 
@@ -100,7 +102,7 @@ public class Purchase {
 		return user;
 	}
 
-	public void addDress(Dress dress, double quantity) throws NotFoundException, InvalidParamException {
+	/*public void addDress(Dress dress, double quantity) throws NotFoundException, InvalidParamException {
 		if (dress == null)
 			throw new NotFoundException();
 		DressToPurchase purchaseDress = new DressToPurchase(this, dress, quantity);
@@ -123,7 +125,7 @@ public class Purchase {
             	purchaseDress.setDress(null);
         	}
     	}
-	}
+	}*/
  
 	
 }

@@ -48,7 +48,7 @@ public class PurchaseController {
 
 		Dress dress = dressController.getDress(dressId);
 
-		if (purchase.getPayment() == 1)
+		if (purchase.PaymentIsMade())
 			throw new InvalidParamException("Purchase order is paid, please ask for a new purchase order");
 
 		if (dress.getStock() == 0)
@@ -80,14 +80,20 @@ public class PurchaseController {
 
 	}
 
-	public PurchaseDTO toPay(int purchaseId) throws InvalidParamException, NotFoundException {
-
+	public PurchaseDTO toPay(int userId, int purchaseId) throws InvalidParamException, NotFoundException {
+		
+	/*la compra tiene que ser del ususario*/
+		
+		User user = userController.getUser(userId);
 		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
 		
-		if(purchase.getPayment()==1)
+		if (user.getId() != purchase.getUser().getId())
+			throw new InvalidParamException();
+		
+		if(purchase.PaymentIsMade())
 			throw new InvalidParamException("The purchase is already paid");
 
-		purchase.setPayment(1);
+		purchase.setPaymentIsMade(true);
 
 		purchaseRepository.save(purchase);
 
@@ -186,7 +192,7 @@ public class PurchaseController {
 
 		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
 
-		if (purchase.getPayment() == 1)
+		if (purchase.PaymentIsMade())
 			throw new InvalidParamException("You can not retract a purchase that is already paid!!");
 
 		purchaseDressRepository.removeDressToPurchaseByIds(purchaseId, dressId);
@@ -205,7 +211,7 @@ public class PurchaseController {
 		User user = userController.getUser(userId);
 		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
 
-		if (purchase.getPayment() == 1)
+		if (purchase.PaymentIsMade())
 			throw new InvalidParamException("You can not retract a purchase that is already paid!!");
 
 		if (user.getId() != purchase.getUser().getId())
