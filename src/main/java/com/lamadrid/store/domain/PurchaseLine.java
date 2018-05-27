@@ -14,10 +14,10 @@ import org.hibernate.annotations.Type;
 import com.lamadrid.store.utilities.InvalidParamException;
 
 @Entity(name = "dress_to_purchase")
-public class DressToPurchase {
+public class PurchaseLine {
 	
 	@EmbeddedId
-	private DressToPurchaseId id;
+	private PurchaseLineId id;
  
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("purchase_id")
@@ -35,9 +35,9 @@ public class DressToPurchase {
 	@Type (type = "org.hibernate.type.NumericBooleanType")
 	private boolean isPaidAndUpdated;
 	
-	private DressToPurchase() {}
+	private PurchaseLine() {}
  
-	public DressToPurchase(Purchase purchase, Dress dress, double quantity) throws InvalidParamException {
+	public PurchaseLine(Purchase purchase, Dress dress, double quantity) throws InvalidParamException {
 		
 		if(purchase == null) throw new InvalidParamException();
 		
@@ -47,14 +47,14 @@ public class DressToPurchase {
 		
     	this.purchase = purchase;
     	this.dress = dress;
-    	this.id = new DressToPurchaseId(purchase.getId(), dress.getId());
+    	this.id = new PurchaseLineId(purchase.getId(), dress.getId());
     	this.price_unit = dress.getPrice_sold();
     	this.quantity = quantity;
     	this.subtotal = dress.getPrice_sold()*quantity;
     	this.isPaidAndUpdated=false;
  	}
 
-	public DressToPurchaseId getId() {
+	public PurchaseLineId getId() {
 		return id;
 	}
 	
@@ -107,7 +107,7 @@ public class DressToPurchase {
     	if (o == null || getClass() != o.getClass())
         	return false;
  
-    	DressToPurchase that = (DressToPurchase) o;
+    	PurchaseLine that = (PurchaseLine) o;
     	return Objects.equals(purchase, that.purchase) &&
            	Objects.equals(dress, that.dress);
 	}

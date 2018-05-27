@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lamadrid.store.application.PurchaseController;
-import com.lamadrid.store.application.dto.DressToPurchaseDTO;
+import com.lamadrid.store.application.dto.PurchaseLineDTO;
 import com.lamadrid.store.application.dto.PurchaseDTO;
 import com.lamadrid.store.utilities.InvalidParamException;
 import com.lamadrid.store.utilities.NotFoundException;
@@ -44,8 +44,8 @@ public class PurchaseRestController {
 	public String addToCart(@PathVariable int purchaseId, @PathVariable int dressId, @RequestBody String json)
 			throws NotFoundException, InvalidParamException {
 
-		DressToPurchaseDTO purchaseDressDTO = new Gson().fromJson(json, DressToPurchaseDTO.class);
-		DressToPurchaseDTO purchaseDress = controller.addToCart(purchaseId, dressId, purchaseDressDTO);
+		PurchaseLineDTO purchaseDressDTO = new Gson().fromJson(json, PurchaseLineDTO.class);
+		PurchaseLineDTO purchaseDress = controller.addToCart(purchaseId, dressId, purchaseDressDTO);
 
 		return toJson(purchaseDress);
 

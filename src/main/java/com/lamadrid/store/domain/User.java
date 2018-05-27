@@ -23,13 +23,13 @@ public class User {
 	public User(UserDTO userDTO) throws InvalidParamException {
 		if(userDTO==null) throw new InvalidParamException();
 		
-		checkValidName(name);
-		checkValidPassword(password);
-		checkValidEmail(email);
+		checkValidName(userDTO.getName());
+		checkValidPassword(userDTO.getPassword());
+		checkValidEmail(userDTO.getEmail());
 
 		this.name = userDTO.getName();
 		this.email = userDTO.getEmail();
-		this.password = Encryptor.encryptPassword(password);
+		this.password = Encryptor.encryptPassword(userDTO.getPassword());
 	}
 
 	private void checkValidName(String name) throws InvalidParamException {

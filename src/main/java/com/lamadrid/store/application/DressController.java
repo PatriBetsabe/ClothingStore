@@ -8,9 +8,9 @@ import org.springframework.stereotype.Controller;
 
 import com.lamadrid.store.application.dto.DressDTO;
 import com.lamadrid.store.domain.Dress;
-import com.lamadrid.store.domain.DressToPurchase;
+import com.lamadrid.store.domain.PurchaseLine;
 import com.lamadrid.store.persistence.DressRepository;
-import com.lamadrid.store.persistence.DressToPurchaseRepository;
+import com.lamadrid.store.persistence.PurchaseLineRepository;
 import com.lamadrid.store.utilities.InvalidParamException;
 import com.lamadrid.store.utilities.NotFoundException;
 
@@ -20,7 +20,7 @@ public class DressController {
 	@Autowired
 	private DressRepository dressRepository;
 	@Autowired
-	private DressToPurchaseRepository purchaseDressRepository;
+	private PurchaseLineRepository purchaseDressRepository;
 
 	public DressDTO createDress(DressDTO dressDTO) throws InvalidParamException, NotFoundException{
 		Dress dress = new Dress(dressDTO);
@@ -76,10 +76,10 @@ public class DressController {
 
 		Dress dress = dressRepository.getDressById(dressId);
 		
-		List<DressToPurchase> dressesToBuy = purchaseDressRepository.getAllDressesToPurchasesByDress(dress);
+		List<PurchaseLine> dressesToBuy = purchaseDressRepository.getAllPurchasesLinesByDress(dress);
 
 		double stockForUpdating = 0;
-		for (DressToPurchase s : dressesToBuy)
+		for (PurchaseLine s : dressesToBuy)
 			stockForUpdating += s.updateStock();
 		
 		dress.setStock(dress.getStock() - (stockForUpdating));

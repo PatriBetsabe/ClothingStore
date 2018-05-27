@@ -42,7 +42,7 @@ public class Purchase {
 	private User user;
 
 	@OneToMany( mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<DressToPurchase> dresses = new ArrayList<>();
+	private List<PurchaseLine> dresses = new ArrayList<>();
 
 	public Purchase() {
 
@@ -88,7 +88,7 @@ public class Purchase {
 		this.total = total;
 	}
 
-	public List<DressToPurchase> getPurchaseDresses() {
+	public List<PurchaseLine> getPurchaseDresses() {
 		return new ArrayList<>(dresses);
 	}
 
@@ -100,7 +100,7 @@ public class Purchase {
 	public void addDress(Dress dress, double quantity) throws NotFoundException, InvalidParamException {
 		if (dress == null)
 			throw new NotFoundException();
-		DressToPurchase purchaseDress = new DressToPurchase(this, dress, quantity);
+		PurchaseLine purchaseDress = new PurchaseLine(this, dress, quantity);
 		dresses.add(purchaseDress);
 		dress.getPurchases().add(purchaseDress);
 		
@@ -108,9 +108,9 @@ public class Purchase {
 	}
 	
 	public void removeDress(Dress dress) {
-    	for (Iterator<DressToPurchase> iterator = dresses.iterator();
+    	for (Iterator<PurchaseLine> iterator = dresses.iterator();
          	iterator.hasNext(); ) {
-        	DressToPurchase purchaseDress = iterator.next();
+        	PurchaseLine purchaseDress = iterator.next();
  
         	if (purchaseDress.getPurchase().equals(this) &&
                 	purchaseDress.getDress().equals(dress)) {

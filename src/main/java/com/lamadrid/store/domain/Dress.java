@@ -36,7 +36,7 @@ public class Dress {
 	private double stock,price_sold,price_cost;
 
 	@OneToMany(mappedBy = "dress")
-	private List<DressToPurchase> purchases = new ArrayList<>();
+	private List<PurchaseLine> purchases = new ArrayList<>();
 
 	public Dress() {
 
@@ -150,7 +150,7 @@ public class Dress {
 		this.price_cost = price_cost;
 	}
 
-	public List<DressToPurchase> getPurchases() {
+	public List<PurchaseLine> getPurchases() {
 		return purchases;
 	}
 

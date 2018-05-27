@@ -6,13 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.lamadrid.store.application.dto.DressToPurchaseDTO;
+import com.lamadrid.store.application.dto.PurchaseLineDTO;
 import com.lamadrid.store.application.dto.PurchaseDTO;
 import com.lamadrid.store.domain.Dress;
-import com.lamadrid.store.domain.DressToPurchase;
+import com.lamadrid.store.domain.PurchaseLine;
 import com.lamadrid.store.domain.Purchase;
 import com.lamadrid.store.domain.User;
-import com.lamadrid.store.persistence.DressToPurchaseRepository;
+import com.lamadrid.store.persistence.PurchaseLineRepository;
 import com.lamadrid.store.persistence.PurchaseRepository;
 import com.lamadrid.store.utilities.InvalidParamException;
 import com.lamadrid.store.utilities.NotFoundException;
@@ -25,7 +25,7 @@ public class PurchaseController {
 	@Autowired
 	private PurchaseRepository purchaseRepository;
 	@Autowired
-	private DressToPurchaseRepository purchaseDressRepository;
+	private PurchaseLineRepository purchaseDressRepository;
 	@Autowired
 	private DressController dressController;
 
@@ -37,7 +37,7 @@ public class PurchaseController {
 		return new PurchaseDTO(purchase);
 	}
 
-	public DressToPurchaseDTO addToCart(int purchaseId, int dressId, DressToPurchaseDTO addDressToShoppingList)
+	public PurchaseLineDTO addToCart(int purchaseId, int dressId, PurchaseLineDTO addDressToShoppingList)
 			throws NotFoundException, InvalidParamException {
 
 		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
@@ -49,11 +49,11 @@ public class PurchaseController {
 		if (dress.getStock() == 0)
 			throw new NotFoundException("No stock");
 
-		DressToPurchase purchaseDress = new DressToPurchase(purchase, dress, addDressToShoppingList.getQuantity());
+		PurchaseLine purchaseDress = new PurchaseLine(purchase, dress, addDressToShoppingList.getQuantity());
 
 		purchaseDressRepository.save(purchaseDress);
 
-		return new DressToPurchaseDTO(purchaseDress);
+		return new PurchaseLineDTO(purchaseDress);
 
 	}
 
@@ -61,10 +61,10 @@ public class PurchaseController {
 
 		Purchase purchase = purchaseRepository.getPurchaseById(purchaseId);
 
-		List<DressToPurchase> dresses = purchaseDressRepository.getAllDressesToPurchasesByPurchase(purchase);
+		List<PurchaseLine> dresses = purchaseDressRepository.getAllPurchasesLinesByPurchase(purchase);
 
 		double totalPrice = 0;
-		for (DressToPurchase prices : dresses)
+		for (PurchaseLine prices : dresses)
 			totalPrice += prices.getSubtotal();
 
 		purchase.setTotal(totalPrice);

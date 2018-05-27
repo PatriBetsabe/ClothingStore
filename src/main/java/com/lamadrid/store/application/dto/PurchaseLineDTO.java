@@ -1,19 +1,19 @@
 package com.lamadrid.store.application.dto;
 
 import com.google.gson.annotations.Expose;
-import com.lamadrid.store.domain.DressToPurchase;
-import com.lamadrid.store.domain.DressToPurchaseId;
+import com.lamadrid.store.domain.PurchaseLine;
+import com.lamadrid.store.domain.PurchaseLineId;
 import com.lamadrid.store.utilities.NotFoundException;
 
-public class DressToPurchaseDTO {
+public class PurchaseLineDTO {
 
-	private DressToPurchaseId id;
+	private PurchaseLineId id;
 	@Expose
 	private double price_unit,quantity, subtotal;
 	@Expose
 	private boolean isPaidAndUpdated;
 
-	public DressToPurchaseDTO(DressToPurchase purchaseDress) throws NotFoundException {
+	public PurchaseLineDTO(PurchaseLine purchaseDress) throws NotFoundException {
 		if (purchaseDress == null)
 			throw new NotFoundException();
 
@@ -24,7 +24,7 @@ public class DressToPurchaseDTO {
 		this.isPaidAndUpdated = purchaseDress.isPaidAndUpdated();
 	}
 
-	public DressToPurchaseId getId() {
+	public PurchaseLineId getId() {
 		return id;
 	}
 
