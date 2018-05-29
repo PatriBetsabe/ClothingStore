@@ -40,6 +40,7 @@ public class Purchase {
 	@ManyToOne(targetEntity = User.class)
 	@JoinColumn(name = "user_id")
 	private User user;
+	
 
 	@OneToMany( mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PurchaseLine> dresses = new ArrayList<>();
