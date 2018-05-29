@@ -1,3 +1,6 @@
+/**
+ * @author Patty
+ */
 package com.lamadrid.store.api;
 
 import java.util.List;
